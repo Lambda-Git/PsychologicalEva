@@ -1,0 +1,789 @@
+<!doctype html>
+<html>
+<head>
+    <title>视觉短时记忆(正式)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../../css/common.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/icons-extra.css"/>
+
+    <script src="../../js/wz_jsgraphics/wz_jsgraphics.js" type=text/javascript></script>
+    <script src="../../js/Statistics/Statistics.js" type=text/javascript></script>
+    <script src="../../js/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui-1.9.1.custom.min.js" type="text/javascript"></script>
+    <script src="../../js/utils.js" type=text/javascript></script>
+    <script src="../../js/progress_bar.js" type=text/javascript></script>
+
+    <script src="../../../js/mui.min.js"></script>
+    <script src="../../../js/common.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+
+    <style type="text/css">
+        body {
+            margin: 0px;
+            background-color: #000000;
+            cursor: pointer;
+        }
+
+        span {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80pt;
+            color: #ffffff;
+        }
+
+        span.loading {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20pt;
+            color: #ffffff;
+        }
+
+        span.fixation {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80pt;
+            color: #ffffff;
+        }
+
+        span.message {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15pt;
+            color: #ffffff;
+        }
+
+        span.addsubmildiv {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80pt;
+            color: #ffffff;
+        }
+
+        span.asmdresult {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 50pt;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<div class="mui-row formalResult active">
+    <div class="mui-col-sm-3"></div>
+    <div class="mui-col-sm-6">
+        <img class="formalSmilelGif" src="../../images/smile1.gif" />
+        <h3>请联系老师，获得测评结果!</h3>
+        <button id="formalTo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">点击返回任务列表</button>
+    </div>
+    <div class="mui-col-sm-3"></div>
+</div>
+
+<form id="result" name="result" method="post" action="" style="display: none">
+    <input type=hidden value="72" name="taskid" id="taskid"/>
+    <input type=hidden value="0" name="sumitcoids" id="sumitcoids"/>
+    <input type=hidden value="0" name="targetpagename" id="targetpagename"/>
+    <input type=hidden value="VWM" name="taskIdentifier" id="taskIdentifier"/>
+</form>
+
+<table height="50%" border=0px width="100%" border="0" align="center" style="margin-top: 40px">
+    <tr>
+        <td align="center" valign="middle">
+            <table cellspacing="0" border=0px cellpadding="0" width="80%" align="center" border="0">
+                <tr></tr>
+                <tr>
+                    <td align=center height=200px colspan=2>
+								<span id="loading" class="loading">
+									<img name="imageObj" id="imageObj" src="../../images/black_toosmall.jpg"/>
+									<br/>加载中...
+								</span>
+                    </td>
+                    <td align=center height=80px>
+								<span id="item1_span" class="asmdresult">
+								<img name="item1_image" id="item1_image" src="../../images/black_toosmall.jpg"/>
+								</span>
+                    </td>
+                    <td align=center height=80px>
+								<span id="item2_span" class="asmdresult">
+								<img name="item2_image" id="item2_image" src="../../images/black_toosmall.jpg"/>
+								</span>
+                    </td>
+                    <td align=center height=80px>
+								<span id="target_span" class="addsubmildiv">
+									<img name="target_image" id="target_image" src="../../images/black_toosmall.jpg"/>
+								</span>
+                    </td>
+                    <td align=center height=80px>
+								<span id="item3_span" class="asmdresult">
+								<img name="item3_image" id="item3_image" src="../../images/black_toosmall.jpg"/>
+								</span>
+                    </td>
+                    <td align=center height=80px>
+								<span id="item4_span" class="asmdresult">
+								<img name="item4_image" id="item4_image" src="../../images/black_toosmall.jpg"/>
+								</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align=center height=80px>
+            <span id="cueing" class="asmdresult"> &nbsp;&nbsp;&nbsp; </span>
+        </td>
+    </tr>
+</table>
+
+<div id="stroopnum_tip" style="display:none;" class="stroopnum_tip_div">
+</div>
+<div id="myCanvas" style="display:none;" class="stroopnum_relax_tips_div">
+    <br/>
+</div>
+
+<div id="feed_back_div" style="display:none;" class="stroopnum_relax_tips_div">
+    <span id="message" class="message"></span>
+    <span><img name="messageimageObj" id="messageimageObj" src="../../images/black_toosmall.jpg"/></span>
+</div>
+
+<!--安卓、ios、ipad-->
+<div id="button_pq" style="display:none;">
+    <div class="mui-row">
+        <div class="mui-col-sm-1"></div>
+        <div class="mui-col-sm-5" style="text-align: left">
+            <img name="button_q" id="img_Q" onclick="left_click()" src="../../images/button_Q.png"/>
+        </div>
+        <div class="mui-col-sm-5" style="text-align: right">
+            <img name="button_p" id="img_P" onclick="right_click()" src="../../images/button_P.png"/>
+        </div>
+        <div class="mui-col-sm-1"></div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+
+var pic_path = "../../testpics/VWM/";
+var black_image = "../../images/black_toosmall.jpg";
+var pleased_image = "../../images/pleased.JPG";
+var depressed_image = "../../images/depressed.JPG";
+var loading_image = "../../images/ajax-loader(2).gif";
+var stimidAll = new Array();
+var type4All = new Array();
+
+
+var simple_target = new Array("34", "10", "26", "40", "61", "16", "18", "48", "51", "60", "34", "46", "22", "24", "35", "78", "54", "31", "16", "67", "69", "13", "31", "46", "21", "22", "76", "52", "41", "13", "79", "25", "27", "12", "4", "49", "45", "15", "42", "44", "75", "43", "39", "55", "45", "17", "73", "72", "40", "66", "1", "32", "64", "28", "36", "33", "58", "14", "11", "79", "20", "42", "37", "50", "25", "57", "29", "38", "19", "48", "63", "23", "43", "30", "47", "7", "49", "37", "19", "28");
+
+var simple_1 = new Array("34", "10", "56", "40", "20", "16", "48", "9", "12", "21", "64", "76", "22", "54", "65", "39", "15", "31", "46", "14", "30", "43", "61", "35", "51", "52", "5", "29", "71", "13", "11", "55", "57", "42", "4", "79", "6", "45", "3", "74", "36", "73", "69", "26", "75", "47", "8", "33", "70", "27", "1", "62", "17", "28", "66", "63", "23", "44", "41", "2", "50", "72", "37", "80", "25", "18", "59", "68", "19", "78", "24", "53", "38", "60", "77", "7", "32", "67", "49", "58");
+var simple_2 = new Array("47", "71", "25", "41", "61", "65", "33", "72", "69", "60", "17", "5", "59", "27", "16", "42", "66", "50", "35", "67", "51", "38", "20", "46", "30", "29", "76", "52", "10", "68", "70", "26", "24", "39", "77", "2", "75", "36", "78", "7", "45", "8", "12", "55", "6", "34", "73", "48", "11", "54", "80", "19", "64", "53", "15", "18", "58", "37", "40", "79", "31", "9", "44", "1", "56", "63", "22", "13", "62", "3", "57", "28", "43", "21", "4", "74", "49", "14", "32", "23");
+var simple_3 = new Array("73", "49", "15", "79", "59", "55", "7", "48", "51", "60", "23", "35", "61", "13", "24", "78", "54", "70", "5", "53", "69", "2", "20", "74", "10", "11", "44", "68", "30", "52", "50", "14", "16", "1", "43", "38", "45", "4", "42", "33", "75", "32", "28", "65", "34", "6", "47", "72", "29", "66", "40", "21", "56", "67", "25", "22", "62", "3", "80", "41", "9", "31", "76", "39", "64", "57", "18", "27", "58", "37", "63", "12", "77", "19", "36", "46", "71", "26", "8", "17");
+var simple_4 = new Array("73", "49", "15", "79", "59", "55", "7", "48", "51", "60", "23", "35", "61", "13", "24", "78", "54", "70", "5", "53", "69", "2", "20", "74", "10", "11", "44", "68", "30", "52", "50", "14", "16", "1", "43", "38", "45", "4", "42", "33", "75", "32", "28", "65", "34", "6", "47", "72", "29", "66", "40", "21", "56", "67", "25", "22", "62", "3", "80", "41", "9", "31", "76", "39", "64", "57", "18", "27", "58", "37", "63", "12", "77", "19", "36", "46", "71", "26", "8", "17");
+var simple_result = new Array("q", "q", "p", "q", "q", "q", "p", "q", "q", "q", "p", "p", "q", "p", "p", "q", "q", "q", "p", "q", "q", "p", "p", "q", "p", "p", "q", "q", "p", "q", "q", "p", "p", "p", "q", "p", "q", "p", "q", "p", "q", "p", "p", "q", "p", "p", "q", "q", "p", "q", "q", "p", "q", "q", "p", "p", "q", "p", "p", "q", "p", "p", "q", "p", "q", "q", "p", "p", "q", "p", "q", "p", "q", "p", "p", "q", "q", "p", "p", "p");
+
+var simple_target = new Array("51", "39", "78", "7", "31", "48", "1", "36", "13", "69", "32", "28", "15", "19", "73", "58", "24", "29", "46", "37", "38", "35", "42", "61", "57", "12", "67", "21", "52", "75", "17", "23", "34", "45", "45", "48", "43", "72", "18", "34", "63", "14", "16", "13", "16", "40", "46", "25", "76", "50", "64", "79", "44", "4", "26", "49", "40", "54", "27", "47", "22", "31", "43", "42", "66", "11", "30", "37", "49", "20", "55", "10", "41", "19", "79", "33", "28", "25", "60");
+var simple_1 = new Array("12", "69", "39", "7", "31", "78", "1", "66", "43", "30", "62", "28", "45", "19", "8", "23", "54", "59", "35", "67", "68", "65", "3", "20", "18", "42", "14", "51", "29", "36", "47", "53", "34", "6", "75", "9", "73", "33", "48", "64", "24", "44", "16", "13", "46", "70", "76", "25", "5", "80", "17", "2", "74", "4", "56", "32", "40", "15", "57", "77", "22", "61", "38", "72", "27", "41", "60", "37", "79", "50", "26", "10", "71", "49", "11", "63", "58", "55", "21");
+var simple_2 = new Array("69", "12", "42", "74", "50", "3", "80", "15", "38", "51", "19", "53", "36", "62", "73", "58", "27", "22", "46", "14", "13", "16", "78", "61", "63", "39", "67", "30", "52", "45", "34", "28", "47", "75", "6", "72", "8", "48", "33", "17", "57", "37", "65", "68", "35", "11", "5", "56", "76", "1", "64", "79", "7", "77", "25", "49", "41", "66", "24", "4", "59", "20", "43", "9", "54", "40", "21", "44", "2", "31", "55", "71", "10", "32", "70", "18", "23", "26", "60");
+var simple_3 = new Array("51", "28", "78", "46", "70", "37", "40", "25", "2", "69", "21", "67", "4", "58", "47", "62", "13", "18", "74", "26", "27", "24", "42", "59", "57", "1", "53", "10", "68", "75", "6", "12", "73", "45", "34", "48", "32", "72", "7", "23", "63", "3", "55", "52", "5", "29", "35", "64", "44", "20", "56", "41", "33", "43", "15", "71", "79", "54", "16", "36", "60", "39", "77", "31", "66", "80", "19", "76", "38", "9", "65", "49", "30", "8", "50", "22", "17", "14", "61");
+var simple_result = new Array("q", "p", "q", "q", "q", "p", "q", "p", "p", "q", "p", "q", "p", "q", "q", "q", "p", "p", "q", "p", "p", "p", "q", "q", "q", "p", "q", "p", "q", "q", "p", "p", "q", "q", "p", "q", "p", "q", "p", "p", "q", "p", "q", "q", "p", "p", "p", "q", "q", "p", "q", "q", "p", "q", "p", "q", "q", "q", "p", "p", "q", "p", "q", "p", "q", "p", "p", "q", "p", "p", "q", "q", "p", "p", "q", "p", "p", "p", "q");
+
+
+// zgl -- 方便测试接口数据
+// var simple_target=new Array("58","13");
+// var simple_1=new Array("88","11");
+// var simple_2=new Array("29","13");
+// var simple_3=new Array("18","16");
+// var simple_4=new Array("18","16");
+// var simple_result=new Array("p","q");
+
+
+
+//Simple：
+var simple_target_images = new Array();
+var simple_1_images = new Array();
+var simple_2_images = new Array();
+var simple_3_images = new Array();
+var simple_4_images = new Array();
+
+var simple_result_images = new Array();
+
+var progress = 0;//loading images progress
+
+var correct_result;//
+var user_result = new Array();
+var rc_key = new Array();
+var rc_time = new Array();
+var user_time = new Array();
+
+
+var timer_id;
+var index = 0;
+var trial_interval = 300; // 试验间隔（ms）
+var key_interval = 1000; // 按键后间隔时间
+var fixation_interval = 400; //
+var blank_interval = 1000; //
+var short_blank_interval = 500; //
+var relax_interval = 2000;
+var feedback_interval = 1000;// 反馈时间
+var ifinite_wait_interval = 40000000;
+var start_delay = 1000; // in ms
+var undef_key = "undef";
+var undef_time = trial_interval;
+var timestamp;
+var StartSign = 0;
+
+var jg = new jsGraphics("myCanvas");
+var midle_relax_interval = 20000;//
+var progressbar = 0;//
+var bar_length = 300;//
+var update_interval = midle_relax_interval / bar_length;//
+var current_index = 0;
+var current_start_time = getTimestamp();
+var ristrict_time = 1000 * 60 * 10;
+var relax_point = new Array("40");
+
+var all_a;
+
+mui(document.body).on('tap', '#formalTo', function(e) {
+    setTimeout(function() {
+        mui.openWindow({
+            url: '../../../task_1/task_list.html',
+            createNew: true,
+            styles: {
+                cachemode:"noCache",
+            }
+        });
+    }.bind(this), 1);
+});
+
+function preloadimages() {
+    progress = 0;
+    for (i = 0; i < simple_target.length; i++) {
+        simple_target_images[i] = new Image();
+        simple_1_images[i] = new Image();
+        simple_2_images[i] = new Image();
+        simple_3_images[i] = new Image();
+        simple_4_images[i] = new Image();
+
+        simple_target_images[i].onload = function () {
+            progress += 1;
+            if (progress == simple_target.length) {
+                setTimeout("wait_to_start()", 0);
+            } else {
+                setTimeout("show_load_image_progress(" + Math.round(progress / simple_target.length * 100) + ")", 0);
+            }
+        }
+        simple_target_images[i].src = pic_path + simple_target[i] + ".gif";
+        simple_1_images[i].src = pic_path + simple_1[i] + ".gif";
+        simple_2_images[i].src = pic_path + simple_2[i] + ".gif";
+        simple_3_images[i].src = pic_path + simple_3[i] + ".gif";
+        simple_4_images[i].src = pic_path + simple_4[i] + ".gif";
+    }
+    blank = new Image();
+    blank.src = "../../images/black.jpg";
+}
+
+/*
+function preloadimages()
+{
+
+  for (var i=0;i<simple_target.length;i++)
+  {
+      simple_target_images[i]=new Image();
+      simple_target_images[i].src=pic_path+simple_target[i]+".gif";
+      simple_1_images[i]=new Image();
+      simple_1_images[i].src=pic_path+simple_1[i]+".gif";
+      simple_2_images[i]=new Image();
+      simple_2_images[i].src=pic_path+simple_2[i]+".gif";
+
+      progress = Math.round(100*(i+1)/(simple_target.length));
+	  //show_load_image_progress(progress);
+      setTimeout("show_load_image_progress("+progress+")",0);//i*50
+  }
+  setTimeout("wait_to_start()",(simple_target.length)*10);//(simple_target.length+complex_up.length)*50
+}
+*/
+
+function wait_to_start() {
+    //alert(progress);
+    document.getElementById('loading').style.display = "none";
+    //all_a=new Array(new ari_obj(simple_1_images,simple_2_images,simple_target_images,simple_result),new ari_obj(complex_item1_images,complex_item2_images,complex_target_images,complex_result));
+    all_a = new Array(new ari_obj(simple_1_images, simple_2_images, simple_3_images, simple_4_images, simple_target_images, simple_result));
+    current_start_time = getTimestamp();
+    current_index = 0;
+    any_key_start();
+
+}
+
+function show_load_image_progress(progress) {
+    //stroopnum_tips.style.display="block";
+    //dotcomparison_tips.style.display="block";
+    //stroopnum_tips.innerHTML="<br/><br/>正在装入程序("+ progress + "%)"+"，稍等... ";
+    //document.getElementById("loading").innerHTML = "<img  src='../../images/ajax-loader(2).gif'/><br/><br/>正在装入程序("+ progress + "%)"+"，稍等... ";
+    document.getElementById("loading").innerHTML = "<br/><br/>程序加载中(" + progress + "%)";
+
+}
+
+/* 按任意键继续 */
+function any_key_start() {
+    document.getElementById("myCanvas").style.display = "none";
+    var stroopnum_tips = document.getElementById("stroopnum_tip");
+    stroopnum_tips.style.display = "block";
+    stroopnum_tips.innerHTML = "<div class='mui-row' style='text-align: center;margin-top: -120px;'>" +
+        "<button type='button' class='mui-btn mui-btn-primary startBtn' onclick='ignor_key_press()'>开始正式测试</button>" +
+        "</div>";
+    document.onkeydown = ignor_key_press;
+    //如果是安卓、ios、ipad的情况下，显示图片，并且添加鼠标响应事件
+    if (is_iPad()) {
+        //如果是安卓、ios、ipad系统
+        document.getElementById("button_pq").style.display = "none"; //测试开始之前隐藏按钮
+        document.getElementById("button_pq").addEventListener("mousedown", ignor_key_press, true);
+    }
+}
+
+/* 中场休息结束之后 */
+function midleRelaxInterval() {
+    document.getElementById("myCanvas").style.display = "none";
+    var stroopnum_tips = document.getElementById("stroopnum_tip");
+    stroopnum_tips.style.display = "block";
+    stroopnum_tips.innerHTML = "<div class='mui-row' style='text-align: center;margin-top: -120px;'>" +
+        "<button type='button' class='mui-btn mui-btn-primary startBtn' onclick='ignor_key_press()'>点击此处继续答题</button>" +
+        "</div>";
+    document.onkeydown = ignor_key_press;
+    //如果是安卓、ios、ipad的情况下，显示图片，并且添加鼠标响应事件
+    if (is_iPad()) {
+        //如果是安卓、ios、ipad系统
+        document.getElementById("button_pq").style.display = "none"; //测试开始之前隐藏按钮
+        document.getElementById("button_pq").addEventListener("mousedown", ignor_key_press, true);
+    }
+}
+
+
+function ignor_key_press() {
+    current_start_time = getTimestamp();//record part start time
+    var stroopnum_tips = document.getElementById("stroopnum_tip");
+    stroopnum_tips.style.display = "none";
+
+    if (StartSign == 0) {
+        setTimeout("show_fixation()", blank_interval);
+        StartSign = 1;
+    }
+    //setTimeout("show_fixation()", blank_interval);
+    setTimeout("ifback()", ristrict_time);
+    if (is_iPad()) {
+        document.getElementById("button_pq").removeEventListener("mousedown", ignor_key_press, true);
+    }
+
+}
+
+/* the beginning method, in actural it is show blank screen */
+function show_fixation() {
+    document.getElementById("feed_back_div").style.display = "none";
+    if (index < all_a.length) {
+        var need_ralex = false  //(index<all_a.length-1);//the last portion
+        if ((getTimestamp() - current_start_time > ristrict_time) || current_index >= all_a[index].length) {
+            index++;
+            if (need_ralex) {
+                document.getElementById("item1_span").style.display = "none";
+                document.getElementById("item2_span").style.display = "none";
+                document.getElementById("stroopnum_tip").innerHTML = " ";
+                document.getElementById("myCanvas").style.display = "block";
+                start_progressbar();
+                document.onkeydown = null;
+                setTimeout("midleRelaxInterval()", midle_relax_interval + 2000);
+                // setTimeout("any_key_start()", midle_relax_interval + 2000);
+            } else if (index == all_a.length) {
+                post_result();
+            } else {
+                current_index = 0;
+                setTimeout("change_view()", 0);
+            }
+        } else {
+            if (is_in(current_index, relax_point)) {
+                relax_point = romve_value(current_index, relax_point)//remove it
+                //document.getElementById("left_span").style.display = "none";
+                document.getElementById("target_span").style.display = "none";
+                document.getElementById("stroopnum_tip").innerHTML = " ";
+                document.getElementById("myCanvas").style.display = "block";
+                start_progressbar();
+                document.onkeydown = null;
+                StartSign = 0;
+                setTimeout("midleRelaxInterval()", midle_relax_interval + 2000);
+                // setTimeout("any_key_start()", midle_relax_interval + 2000);
+            } else {
+                setTimeout("change_view()", 0);
+            }
+        }
+    } else {
+        post_result();
+        //alert(" will submit the result.");
+    }
+}
+
+
+function change_view() {
+    var stroop = all_a[index];
+
+    document.getElementById("target_span").style.display = "none";
+    document.getElementById("target_span").style.display = "block";
+    document.getElementById("target_image").src = all_a[index].item1_array[current_index].src;
+    setTimeout("show_blank1()", 120);
+}
+
+function show_blank1() {
+    document.getElementById("target_span").style.display = "none";
+    setTimeout("show_item2()", 400);
+}
+
+
+function show_item2() {
+    document.getElementById("target_span").style.display = "block";
+    document.getElementById("target_image").src = all_a[index].item2_array[current_index].src;
+    setTimeout("show_blank2()", 120);
+}
+
+function show_blank2() {
+    document.getElementById("target_span").style.display = "none";
+    setTimeout("show_item3()", 400);
+}
+
+
+function show_item3() {
+    document.getElementById("target_span").style.display = "block";
+    document.getElementById("target_image").src = all_a[index].item3_array[current_index].src;
+    setTimeout("show_blank3()", 120);
+}
+
+function show_blank3() {
+    document.getElementById("target_span").style.display = "none";
+    setTimeout("show_target()", 800);
+}
+
+function show_target() {
+    document.getElementById("target_span").style.display = "block";
+    document.getElementById("target_image").src = all_a[index].target_array[current_index].src;
+    setTimeout("show_target_Response()", 120);
+}
+
+function show_target_Response() {
+    document.getElementById("target_span").style.display = "none";
+    all_a[index].user_result[current_index] = undef_key;
+    rc_time[current_index] = undef_time;
+    timestamp = getTimestamp();
+    stimidAll[current_index] = current_index + 1;
+    type4All[current_index] = 0;
+    current_index++;
+    document.onkeydown = key_down;
+    document.getElementById("cueing").innerHTML = "√&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;×";
+    //增加移动端 按钮点击功能
+    document.getElementById("button_pq").style.display = "block";
+}
+
+
+//check if a value in a array
+function is_in(targ, sour) {
+    for (var i = 0; i < sour.length; i++) {
+        if (targ == sour[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//remove a value in a array
+function romve_value(targ, sour) {
+    var cop = new Array();
+    for (var i = 0; i < sour.length; i++) {
+        if (targ != sour[i]) {
+            cop.push(sour[i]);
+        }
+    }
+    return cop;
+}
+
+//打印测试结果
+function add_result_to_form(id, value) {
+    var elem = document.createElement("input");
+    elem.setAttribute("type", "text");
+    elem.setAttribute("id", id);
+    elem.setAttribute("name", id);
+    elem.setAttribute("value", value);
+    document.getElementById("result").appendChild(elem);
+}
+
+function post_result() {
+    var corrects = new Array();
+    var users = new Array();
+    for (var i = 0; i < all_a.length; i++) {
+        var mdcobj = all_a[i];
+        corrects = add_array(corrects, get_related_result(mdcobj.correct_result_array, mdcobj.user_result.length));
+        users = add_array(users, mdcobj.user_result);
+    }
+    /*
+    for(var i=0;i<all_a.length;i++)
+    {
+        var mdcobj=all_a[i];
+        add_result_to_form("correct_result", mdcobj.correct_result_array.join(";"));
+        add_result_to_form("user_result", mdcobj.user_result.join(";"));
+    }
+    */
+    add_result_to_form("correct_result", corrects.join(";"));
+    add_result_to_form("user_result", users.join(";"));
+    add_result_to_form("duration", getTimestamp() - start_time);
+    add_result_to_form("user_time", rc_time.join(";"));
+
+    //var corrects=get_related_result(correct_result,user_result.length);
+    ///////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
+    var type4set = type4All.join(";");
+    var stimidset = stimidAll.join(";");
+    var correctanswerset = corrects.join(";")
+    var buttonset = users.join(";");
+    var timeset = rc_time.join(";");
+    var timeaverage = getTimestamp() - start_time;
+    add_result_to_form("type4set", type4set);
+    add_result_to_form("stimidset", stimidset);
+    add_result_to_form("correctanswerset", correctanswerset);
+    add_result_to_form("buttonset", buttonset);
+    add_result_to_form("timeset", timeset);
+    add_result_to_form("timeaverage", timeaverage);
+    var radioset = "";
+    var numset = "";
+    var radiolist1set = "";
+    var radiolist2set = "";
+    var radiolist3set = "";
+    var radiolist4set = "";
+    var radiolist5set = "";
+    var radiolist6set = "";
+    var radiolist7set = "";
+    var radiolist8set = "";
+    var radiolist9set = "";
+    var radiolist10set = "";
+    if (corrects.length > 1) {
+        for (var i = 0; i < corrects.length - 1; i++) {
+            radioset = radioset + ";" + "";
+            numset = numset + ";" + "";
+            radiolist1set = radiolist1set + ";" + "";
+            radiolist2set = radiolist2set + ";" + "";
+            radiolist3set = radiolist3set + ";" + "";
+            radiolist4set = radiolist4set + ";" + "";
+            radiolist5set = radiolist5set + ";" + "";
+            radiolist6set = radiolist6set + ";" + "";
+            radiolist7set = radiolist7set + ";" + "";
+            radiolist8set = radiolist8set + ";" + "";
+            radiolist9set = radiolist9set + ";" + "";
+            radiolist10set = radiolist10set + ";" + "";
+        }
+    }
+    var countOfCorrectNumber_ByType = getCorrectCountSortByType(numset, correctanswerset, type4set);
+    var countOfCorrectButton_ByType = getCorrectCountSortByType(buttonset, correctanswerset, type4set);
+    var countOfCorrectRadio_ByType = getCorrectCountSortByType(radioset, correctanswerset, type4set);
+    var countOfCorrectButton_ByType_Corrected = getCorrectCountSortByType_Corrected(buttonset, correctanswerset, type4set);
+    var percentageCorrectNumber_ByType = getPercentageCorreceSortByType(numset, correctanswerset, type4set);
+    var percentageCorrectButton_ByType = getPercentageCorreceSortByType(buttonset, correctanswerset, type4set);
+    var percentageCorrectRadio_ByType = getPercentageCorreceSortByType(radioset, correctanswerset, type4set);
+    var meanNumber_ByType = getMeanSortByType(numset, type4set);
+    var sumNumber_ByType = getSumSortByType(numset, type4set);
+    var meanRT_ByType = getMeanSortByType(timeset, type4set);
+    var meanDeviationNumber_ByType = getMeanDeviationSortByType(numset, correctanswerset, type4set);
+    var sumWeightedRadio_ByType = getWeightedScoreSortByType(radioset, type4set, radiolist1set, radiolist2set, radiolist3set, radiolist4set, radiolist5set, radiolist6set, radiolist7set, radiolist8set, radiolist9set, radiolist10set);
+    var type4_Unique = getType(type4set);
+    add_result_to_form("countOfCorrectNumber_ByType", countOfCorrectNumber_ByType);
+    add_result_to_form("countOfCorrectButton_ByType", countOfCorrectButton_ByType);
+    add_result_to_form("countOfCorrectRadio_ByType", countOfCorrectRadio_ByType);
+    add_result_to_form("countOfCorrectButton_ByType_Corrected", countOfCorrectButton_ByType_Corrected);
+    add_result_to_form("percentageCorrectNumber_ByType", percentageCorrectNumber_ByType);
+    add_result_to_form("percentageCorrectButton_ByType", percentageCorrectButton_ByType);
+    add_result_to_form("percentageCorrectRadio_ByType", percentageCorrectRadio_ByType);
+    add_result_to_form("meanNumber_ByType", meanNumber_ByType);
+    add_result_to_form("sumNumber_ByType", sumNumber_ByType);
+    add_result_to_form("meanRT_ByType", meanRT_ByType);
+    add_result_to_form("meanDeviationNumber_ByType", meanDeviationNumber_ByType);
+    add_result_to_form("sumWeightedRadio_ByType", sumWeightedRadio_ByType);
+    add_result_to_form("type4_Unique", type4_Unique);
+    add_result_to_form("radioset", radioset);
+    add_result_to_form("numset", numset);
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // document.getElementById("result").submit(); //web端为form表单提交
+    //隐藏table 占高度影响
+    $('table').addClass('active');
+    postFormInputData();
+}
+
+//将key_down函数拆成了key_down和key_input函数
+function key_down(e) {
+    //console.log("key_down");
+    //console.log(e);
+    var keyhit = check_keyhit(e);
+    if (!keyhit) {
+        return;
+    } else {
+        key_input(keyhit);
+    }
+}
+
+function key_input(keyhit) {
+    //if is the first type key q or p
+    if (all_a[index].user_result[current_index - 1] == undef_key) {
+        clearInterval(timer_id);
+        var key = undef_key;
+        if (keyhit == '81')// q
+        {
+            key = "Q";
+        }
+        if (keyhit == '87')// w
+        {
+            key = "P";
+        }
+        if (keyhit == '79')// O
+        {
+            key = "Q";
+        }
+        if (keyhit == '80')// p
+        {
+            key = "P";
+        }
+        all_a[index].user_result[current_index - 1] = key;
+        rc_time[current_index - 1] = getTimestamp() - timestamp;
+        show_user_result();
+    }
+}
+
+//两个点击函数和判断ipad函数
+function right_click() {
+    key_input("80");
+}
+
+function left_click() {
+    key_input("79");
+}
+
+function is_iPad() {
+    //判断当前系统是安卓、ios、windows系统
+    var ua = navigator.userAgent.toLowerCase();
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+    var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    if (isAndroid) {
+        return true;
+    } else if (isIOS) {
+        return true;
+    } else if (ua.match(/iPad/i) == "ipad") {
+        return true;
+    } else {
+        return true;  //web端开发测试 暂时设置为true
+    }
+}
+
+//打印测试结果表单
+function show_user_result() {
+    document.getElementById("cueing").innerHTML = "";
+    document.getElementById("item1_span").style.display = "none";
+    document.getElementById("item2_span").style.display = "none";
+    document.getElementById("item3_span").style.display = "none";
+    document.getElementById("item4_span").style.display = "none";
+
+    //document.getElementById("item4_span").style.display = "none";
+    document.getElementById("target_span").style.display = "none";
+    /*
+    document.getElementById("feed_back_div").style.display="block";
+    if(all_a[index].user_result[current_index-1]==all_a[index].correct_result_array[current_index-1])
+    {
+        document.getElementById("message").innerHTML = "<fmt:message key="jsp.eachtest.correctresponse"/>";
+        document.getElementById('messageimageObj').src =pleased_image;
+    }else
+    {
+        document.getElementById("message").innerHTML = "<fmt:message key="jsp.eachtest.wrongresponse"/>";
+        document.getElementById('messageimageObj').src =depressed_image;
+    }
+    */
+    document.getElementById("button_pq").style.display = "none";
+    setTimeout("show_fixation()", feedback_interval);
+
+}
+
+function check_keyhit(e) {
+    var typed_key;
+    if (window.event) {
+        typed_key = window.event.keyCode;
+    } else {
+        typed_key = e.which;
+    }
+    if (typed_key == '81' || typed_key == '80' || typed_key == '79' || typed_key == '87') {
+        return typed_key;
+    } else {
+        document.onkeydown = key_down;
+        return false;
+    }
+
+}
+
+function show_status_bar() {
+    jg.setColor("#ffeeaa");
+    jg.drawRect(20, 40, bar_length, 20);// x-pix y-pix width height
+    jg.paint();
+
+    jg.setColor("#00aaaa");
+    jg.fillRect(20, 40, progressbar, 20);
+    jg.paint();
+
+
+    if (progressbar < bar_length) {
+        setTimeout("show_status_bar()", update_interval);
+    }
+    progressbar++;
+
+}
+
+function start_progressbar() {
+    jg.clear();
+    progressbar = 0;
+    setTimeout("show_status_bar()", 0);
+}
+
+function ari_obj(item1_array, item2_array, item3_array, item4_array, target_array, correct_result_array) {
+    if (item1_array.length != item2_array.length) {
+        alert("item1_array.length!=item2_array.length");
+    }
+    if (target_array.length != item2_array.length) {
+        alert("target_array.length!=item2_array.length");
+    }
+    this.item1_array = item1_array;
+    this.item2_array = item2_array;
+    this.item3_array = item3_array;
+    this.item4_array = item4_array;
+    this.target_array = target_array;
+    this.correct_result_array = correct_result_array;
+    this.length = item1_array.length;
+    this.user_result = new Array();
+    return this;
+}
+
+function getTimestamp() {
+    var now = new Date();
+    return now.getTime(); // in ms
+}
+
+function start() {
+    //document.getElementById('loading').style.display="none";
+    start_time = getTimestamp();
+    preloadimages();
+}
+
+function show_loading() {
+    document.getElementById('imageObj').src = loading_image;
+    setTimeout("start()", start_delay);
+}
+
+//判断整个测试过程时间是否用完
+function ifback() {
+    post_result();
+}
+
+// setTimeout("ifback()", ristrict_time); //产生时间触发器ifback
+
+window.onload = show_loading
+
+</script>
+
+</html>
+
+
+
+
+

@@ -1,0 +1,83 @@
+* {
+    margin:0;
+    padding:0;
+}
+body {
+	background: #fffaea;
+}
+
+/*统一 display: none*/
+.active {
+    display: none;
+}
+
+/*返回上一页按钮*/
+img.goLeft {
+	margin-left: 20px;
+    margin-top: 10px;
+}
+
+
+/*移动端测试结果表单css*/
+#result input {
+    line-height: 44px;
+    width: 23%;
+}
+
+
+/*任务开始按钮--css*/
+.startBtn {
+    width: 180px;
+    margin-top: 20px;
+    height: 57px;
+    font-size: 25px
+}
+
+/*测试介绍--练习、正式测试 --css*/
+.comIntroInfo .info {
+    border-radius: 20px;
+    border: 1px dashed #007aff;
+    font-size: 18px;
+    line-height: 28px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.comIntroInfo .buttonType {
+    text-align: center;
+}
+.comIntroInfo .buttonType button {
+    font-size: 18px;
+    width: 170px;
+ }
+.comIntroInfo .title {
+    text-align: center;
+}
+.comIntroInfo .title h3 {
+    margin-top: 20px;
+}
+
+/*正式测验任务结束页面-css*/
+.formalResult {
+    margin-top: 30px;
+}
+.formalResult .mui-col-sm-6 {
+    text-align: center;
+    color: #fff;
+}
+.formalResult .mui-col-sm-6 #formalTo {
+    margin-top: 30px;
+    font-size: 25px;
+}
+
+/*练习页面 笑脸*/
+.practiceSmilelGif {
+    margin-top: 100px;
+    width: 255px;
+}
+/*正式练习 笑脸*/
+.formalSmilelGif{
+    margin-top: 60px;
+    width: 200px;
+}

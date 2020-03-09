@@ -1,0 +1,584 @@
+<!doctype html>
+<html>
+<head>
+    <title>词语辨析(练习)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="../../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../../css/common.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/icons-extra.css"/>
+
+    <script src="../../js/wz_jsgraphics/wz_jsgraphics.js" type=text/javascript></script>
+    <script src="../../js/Statistics/Statistics.js" type=text/javascript></script>
+    <script src="../../js/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui-1.9.1.custom.min.js" type="text/javascript"></script>
+    <script src="../../js/utils.js" type=text/javascript></script>
+    <script src="../../js/progress_bar.js" type=text/javascript></script>
+
+    <script src="../../../js/mui.min.js"></script>
+    <script src="../../../js/common.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+
+    <style type="text/css">
+        body {
+            margin: 0px;
+            background-color: #000000;
+            cursor: pointer;
+        }
+
+        span {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80pt;
+            color: #ffffff;
+        }
+
+        span.loading {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20pt;
+            color: #ffffff;
+        }
+
+        span.fixation {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80pt;
+            color: #ffffff;
+        }
+
+        span.message {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20pt;
+            color: #ffffff;
+        }
+
+        span.addsubmildiv {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20pt;
+            color: #ffffff;
+        }
+
+        span.asmdresult {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 30pt;
+            color: #ffffff;
+        }
+
+        .stroopnum_relax_tips_div {
+            text-align: center;
+            background-color: #000000;
+            clear: both;
+            height: 100px;
+            position: absolute;
+            left: 35%;
+            right: 30%;
+            top: 200px;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 27px;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+<div class="mui-row formalResult active">
+    <div class="mui-col-sm-3"></div>
+    <div class="mui-col-sm-6">
+        <img class="practiceSmilelGif" src="../../images/smile1.gif"/>
+    </div>
+    <div class="mui-col-sm-3"></div>
+</div>
+
+<form id="result" name="result" method="post" action="" style="display: none">
+    <input type=hidden value="4212" name="taskid" id="taskid"/>
+    <input type=hidden value="0" name="sumitcoids" id="sumitcoids"/>
+    <input type=hidden value="0" name="targetpagename" id="targetpagename"/>
+    <input type=hidden value="wordassay" name="taskIdentifier" id="taskIdentifier"/>
+</form>
+<table height="50%" border=0px width="100%" border="0" style="margin-top: 110px">
+    <tr>
+        <td align="center" valign="middle">
+            <table cellspacing="0" border=0px cellpadding="0" width="80%" align="center" border="0">
+                <tr>
+                    <td align=center>
+								<span id="loading" class="loading">
+									<img name="imageObj" id="imageObj" src="../../images/black_toosmall.jpg"/>
+									<br/>Loading...
+								</span>
+                        <span id="upper" class="addsubmildiv"></span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align=center height=100px>
+                        <span id="nether" class="asmdresult"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<div id="stroopnum_tip" style="display:none;" class="stroopnum_tip_div">
+</div>
+<div id="myCanvas" style="display:none;" class="stroopnum_relax_tips_div">
+    <br/>
+</div>
+
+<div id="feed_back_div" style="display:none;" class="stroopnum_relax_tips_div">
+    <span id="message" class="message"></span>
+    <span><img name="messageimageObj" id="messageimageObj" src="../../images/black_toosmall.jpg"/></span>
+</div>
+
+<div id="button_pq" style="display:none;">
+    <div class="mui-row">
+        <div class="mui-col-sm-1"></div>
+        <div class="mui-col-sm-5" style="text-align: left">
+            <img name="button_q" id="img_Q" onclick="left_click()" src="../../images/button_Q.png"/>
+        </div>
+        <div class="mui-col-sm-5" style="text-align: right">
+            <img name="button_p" id="img_P" onclick="right_click()" src="../../images/button_P.png"/>
+        </div>
+        <div class="mui-col-sm-1"></div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+
+var black_image = "../../images/black_toosmall.jpg";
+var pleased_image = "../../images/pleased.JPG";
+var depressed_image = "../../images/depressed.JPG";
+var loading_image = "../../images/ajax-loader(2).gif";
+
+var left = new Array("他", "泉", "月亮", "小花", "公园");
+var right = new Array("她", "全", "太阳", "小草", "公元");
+var up = new Array("（&nbsp;&nbsp;&nbsp;&nbsp;）是我的妈妈。", "这个瓶子里装的是（&nbsp;&nbsp;&nbsp;&nbsp;）水。", "弯弯的（&nbsp;&nbsp;&nbsp;&nbsp;）像小船。", "春天到了，（&nbsp;&nbsp;&nbsp;&nbsp;）都变得绿油油的。", "周末的时候，爸爸经常带我去（&nbsp;&nbsp;&nbsp;&nbsp;）里玩。");
+var correct_result = new Array("P", "Q", "Q", "P", "Q");
+
+
+var left1 = new Array();
+var right1 = new Array();
+var up1 = new Array();
+var correct_result1 = new Array();
+var left2 = new Array();
+var right2 = new Array();
+var up2 = new Array();
+var correct_result2 = new Array();
+
+var user_result = new Array();
+var rc_key = new Array();
+var rc_time = new Array();
+
+var timer_id;
+var index = 0;
+var trial_interval = 300; // interval between trials in ms
+var key_interval = 1000; // interval after key press in ms
+var fixation_interval = 400; //
+var blank_interval = 1000; //
+var short_blank_interval = 500; //
+var relax_interval = 2000;
+var feedback_interval = 2000;// feedback time
+var ifinite_wait_interval = 40000000;
+var start_delay = 1000; // in ms
+var undef_key = "undef";
+var undef_time = trial_interval;
+var timestamp;
+
+
+var jg = new jsGraphics("myCanvas");
+var midle_relax_interval = 2000;//
+var progressbar = 0;//
+var bar_length = 300;//
+var update_interval = midle_relax_interval / bar_length;//
+var current_index = 0;
+var current_start_time = getTimestamp();
+var ristrict_time = 5 * 60 * 1000;
+var all_a;
+
+var stimidAll = new Array();
+var type4All = new Array();
+
+
+function ari_obj(l_array, r_array, up_array, correct_result_array) {
+    if (l_array.length != r_array.length) {
+        alert("l_array.length!=r_array.length");
+    }
+    if (l_array.length != up_array.length) {
+        alert("l_array.length!=up_array.length");
+    }
+    this.l_array = l_array;
+    this.r_array = r_array;
+    this.up_array = up_array;
+    this.correct_result_array = correct_result_array;
+    this.length = l_array.length;
+    this.user_result = new Array();
+    this.user_time = new Array();
+    return this;
+}
+
+/* 按任意键继续 */
+function any_key_start() {
+    current_start_time = getTimestamp();
+    current_index = 0;
+
+    document.getElementById("myCanvas").style.display = "none";
+    var stroopnum_tips = document.getElementById("stroopnum_tip");
+    stroopnum_tips.style.display = "block";
+    stroopnum_tips.innerHTML = "<div class='mui-row' style='text-align: center;'>" +
+        "<button type='button' class='mui-btn mui-btn-primary startBtn' onclick='ignor_key_press()'>开始练习</button>" +
+        "</div>";
+    document.onkeydown = ignor_key_press;
+    //如果是安卓、ios、ipad的情况下，显示图片，并且添加鼠标响应事件
+    if (is_iPad()) {
+        //如果是安卓、ios、ipad系统
+        document.getElementById("button_pq").style.display = "none"; //测试开始之前隐藏按钮
+        document.getElementById("button_pq").addEventListener("mousedown", ignor_key_press, true);
+    }
+}
+
+function ignor_key_press() {
+    document.getElementById("button_pq").style.display = "none"; //展示 移动端 点击按钮
+    current_start_time = getTimestamp();//record part start time
+    var stroopnum_tips = document.getElementById("stroopnum_tip");
+    stroopnum_tips.style.display = "none";
+    setTimeout("show_fixation()", blank_interval);
+    if (is_iPad()) {
+        document.getElementById("button_pq").removeEventListener("mousedown", ignor_key_press, true);
+    }
+}
+
+/* the beginning method, in actural it is show blank screen */
+function show_fixation() {
+    document.getElementById("feed_back_div").style.display = "none";
+    if (index < all_a.length) {
+        var need_ralex = (index < all_a.length - 1);//the last portion
+        if ((getTimestamp() - current_start_time > ristrict_time) || current_index >= all_a[index].length) {
+            index++;
+            if (need_ralex) {
+                document.getElementById("upper").innerHTML = " ";
+                document.getElementById("nether").innerHTML = " ";
+                document.getElementById("stroopnum_tip").innerHTML = " ";
+                document.getElementById("myCanvas").style.display = "block";
+                document.getElementById("myCanvasSpan").innerHTML = "<br/>请休息" + midle_relax_interval / 1000 + "秒钟，然后继续测试";
+                start_progressbar();
+                document.onkeydown = null;
+                setTimeout("any_key_start()", midle_relax_interval + 4000);
+            } else {
+                post_result();
+            }
+        } else {
+            setTimeout("change_view()", 0);
+        }
+    } else {
+        post_result();
+    }
+}
+
+function change_view() {
+    var stroop = all_a[index];
+    document.getElementById("upper").innerHTML = stroop.up_array[current_index];
+    document.getElementById("nether").innerHTML = stroop.l_array[current_index] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + stroop.r_array[current_index];
+
+    all_a[index].user_result[current_index] = undef_key;
+    all_a[index].user_time[current_index] = undef_time;
+
+    stimidAll[current_index] = current_index + 1;
+    type4All[current_index] = 0;
+
+    timestamp = getTimestamp();
+    current_index++;
+    //timer_id = setTimeout("show_fixation()",trial_interval);
+    if (is_iPad()) {
+        document.getElementById("button_pq").style.display = "block";//是ipad，显示图片
+    }
+    document.onkeydown = key_down;
+}
+
+function add_result(id, value) {
+    var elem = document.createElement("input");
+    elem.setAttribute("type", "text");
+    elem.setAttribute("id", id);
+    elem.setAttribute("name", id);
+    elem.setAttribute("value", value);
+    document.getElementById("result").appendChild(elem);
+}
+
+function post_result() {
+    var corrects = new Array();
+    var users = new Array();
+    var usertime = new Array();
+    for (var i = 0; i < all_a.length; i++) {
+        var mdcobj = all_a[i];
+        corrects = add_array(corrects, get_related_result(mdcobj.correct_result_array, mdcobj.user_result.length));
+        users = add_array(users, mdcobj.user_result);
+        usertime = add_array(usertime, mdcobj.user_time);
+    }
+    add_result("correct_result", corrects.join(";"));
+    add_result("correctanswerset", corrects.join(";"));
+    add_result("user_result", users.join(";"));
+    add_result("buttonset", users.join(";"));
+    add_result("user_time", usertime.join(";"));
+    add_result("timeset", usertime.join(";"));
+    add_result("duration", getTimestamp() - start_time);
+    add_result("timeaverage", getTimestamp() - start_time);
+    add_result("stimidset", stimidAll.join(";"));
+    add_result("type4set", type4All.join(";"));
+
+    ///////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
+    var stimidset = stimidAll.join(";");
+    var type4set = type4All.join(";");
+    var timeset = usertime.join(";");
+    var buttonset = users.join(";");
+    var correctanswerset = corrects.join(";");
+    var numset = "";
+    var radioset = "";
+    var radiolist1set = "";
+    var radiolist2set = "";
+    var radiolist3set = "";
+    var radiolist4set = "";
+    var radiolist5set = "";
+    var radiolist6set = "";
+    var radiolist7set = "";
+    var radiolist8set = "";
+    var radiolist9set = "";
+    var radiolist10set = "";
+
+    if (corrects.length > 1) {
+        for (var i = 0; i < corrects.length - 1; i++) {
+            numset = numset + ";" + "";
+            radioset = radioset + ";" + "";
+            radiolist1set = radiolist1set + ";" + "";
+            radiolist2set = radiolist2set + ";" + "";
+            radiolist3set = radiolist3set + ";" + "";
+            radiolist4set = radiolist4set + ";" + "";
+            radiolist5set = radiolist5set + ";" + "";
+            radiolist6set = radiolist6set + ";" + "";
+            radiolist7set = radiolist7set + ";" + "";
+            radiolist8set = radiolist8set + ";" + "";
+            radiolist9set = radiolist9set + ";" + "";
+            radiolist10set = radiolist10set + ";" + "";
+        }
+    }
+    var countOfCorrectNumber_ByType = getCorrectCountSortByType(numset, correctanswerset, type4set);
+    var countOfCorrectButton_ByType = getCorrectCountSortByType(buttonset, correctanswerset, type4set);
+    var countOfCorrectRadio_ByType = getCorrectCountSortByType(radioset, correctanswerset, type4set);
+    var countOfCorrectButton_ByType_Corrected = getCorrectCountSortByType_Corrected(buttonset, correctanswerset, type4set);
+    var percentageCorrectNumber_ByType = getPercentageCorreceSortByType(numset, correctanswerset, type4set);
+    var percentageCorrectButton_ByType = getPercentageCorreceSortByType(buttonset, correctanswerset, type4set);
+    var percentageCorrectRadio_ByType = getPercentageCorreceSortByType(radioset, correctanswerset, type4set);
+    var meanNumber_ByType = getMeanSortByType(numset, type4set);
+    var sumNumber_ByType = getSumSortByType(numset, type4set);
+    var meanRT_ByType = getMeanSortByType(timeset, type4set);
+    var meanDeviationNumber_ByType = getMeanDeviationSortByType(numset, correctanswerset, type4set);
+    var sumWeightedRadio_ByType = getWeightedScoreSortByType(radioset, type4set, radiolist1set, radiolist2set, radiolist3set, radiolist4set, radiolist5set, radiolist6set, radiolist7set, radiolist8set, radiolist9set, radiolist10set);
+    var type4_Unique = getType(type4set);
+    add_result("countOfCorrectNumber_ByType", countOfCorrectNumber_ByType);
+    add_result("countOfCorrectButton_ByType", countOfCorrectButton_ByType);
+    add_result("countOfCorrectRadio_ByType", countOfCorrectRadio_ByType);
+    add_result("countOfCorrectButton_ByType_Corrected", countOfCorrectButton_ByType_Corrected);
+    add_result("percentageCorrectNumber_ByType", percentageCorrectNumber_ByType);
+    add_result("percentageCorrectButton_ByType", percentageCorrectButton_ByType);
+    add_result("percentageCorrectRadio_ByType", percentageCorrectRadio_ByType);
+    add_result("meanNumber_ByType", meanNumber_ByType);
+    add_result("sumNumber_ByType", sumNumber_ByType);
+    add_result("meanRT_ByType", meanRT_ByType);
+    add_result("meanDeviationNumber_ByType", meanDeviationNumber_ByType);
+    add_result("sumWeightedRadio_ByType", sumWeightedRadio_ByType);
+    add_result("type4_Unique", type4_Unique);
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    // document.getElementById("result").submit();
+    //异常答对打错提示信息
+    document.getElementById("upper").style.display = "none";
+    $('.formalResult').removeClass('active');
+    mui.toast('练习结束!2秒后自动跳转正式任务页面!', {duration: 'long', type: 'div'})
+    setTimeout(function () {
+        mui.openWindow({
+            url: '../../../task_1/task_type.html?type=1&practice=true',
+            createNew: true,
+            styles: {
+                cachemode: "noCache",
+            }
+        });
+    }, 2000);
+
+}
+
+
+//将key_down函数拆成了key_down和key_input函数
+function key_down(e) {
+    //console.log("key_down");
+    //console.log(e);
+    var keyhit = check_keyhit(e);
+    if (!keyhit) {
+        return;
+    } else {
+        key_input(keyhit);
+    }
+}
+
+function key_input(keyhit) {
+    //if is the first type key q or p
+    if (all_a[index].user_result[current_index - 1] == undef_key) {
+        clearInterval(timer_id);
+        var key = undef_key;
+        if (keyhit == '81')// q
+        {
+            key = "Q";
+        }
+        if (keyhit == '87')// w
+        {
+            key = "P";
+        }
+        if (keyhit == '79')// O
+        {
+            key = "Q";
+        }
+        if (keyhit == '80')// p
+        {
+            key = "P";
+        }
+        all_a[index].user_result[current_index - 1] = key;
+        all_a[index].user_time[current_index - 1] = getTimestamp() - timestamp;
+        show_user_result();
+    }
+}
+
+//两个点击函数和判断ipad函数 -- 移动端点击选择时候才会触发
+function right_click() {
+    document.getElementById("button_pq").style.display = "none"; //提示错误信息时间--隐藏按钮
+    key_input("80");
+}
+
+function left_click() {
+    document.getElementById("button_pq").style.display = "none"; //提示错误信息时间--隐藏按钮
+    key_input("79");
+}
+
+function is_iPad() {
+    //判断当前系统是安卓、ios、windows系统
+    var ua = navigator.userAgent.toLowerCase();
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+    var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    if (isAndroid) {
+        return true;
+    } else if (isIOS) {
+        return true;
+    } else if (ua.match(/iPad/i) == "ipad") {
+        return true;
+    } else {
+        return true;  //web端开发测试 暂时设置为true
+    }
+}
+
+function show_user_result() {
+    document.getElementById("upper").innerHTML = " ";
+    document.getElementById("nether").innerHTML = " ";
+
+    document.getElementById("feed_back_div").style.display = "block";
+    if (all_a[index].user_result[current_index - 1] == all_a[index].correct_result_array[current_index - 1]) {
+        /*答对*/
+        document.getElementById("message").innerHTML = "选择正确！能否再快一些!";
+    } else {
+        /*答错*/
+        document.getElementById("message").innerHTML = "选择错误!";
+    }
+    setTimeout("show_fixation()", feedback_interval);
+}
+
+function check_keyhit(e) {
+    var typed_key;
+    if (window.event) {
+        typed_key = window.event.keyCode;
+    } else {
+        typed_key = e.which;
+    }
+    if (typed_key == '81' || typed_key == '80' || typed_key == '79' || typed_key == '87') {
+        return typed_key;
+    } else {
+        document.onkeydown = key_down;
+        return false;
+    }
+
+}
+
+function show_status_bar() {
+    jg.setColor("#ffeeaa");
+    jg.drawRect(20, 70, bar_length, 20);// x-pix y-pix width height
+    jg.paint();
+
+    jg.setColor("#00aaaa");
+    jg.fillRect(20, 70, progressbar, 20);
+    jg.paint();
+
+    if (progressbar < bar_length) {
+        setTimeout("show_status_bar()", update_interval);
+    }
+    progressbar++;
+}
+
+function start_progressbar() {
+    jg.clear();
+    progressbar = 0;
+    setTimeout("show_status_bar()", 0);
+}
+
+
+function split_left_right_up() {
+    for (var i = 0; i < left.length; i++) {
+        if (i < left.length / 2) {
+            left1.push(left[i]);
+        } else {
+            left2.push(left[i]);
+        }
+    }
+    for (var i = 0; i < right.length; i++) {
+        if (i < right.length / 2) {
+            right1.push(right[i]);
+        } else {
+            right2.push(right[i]);
+        }
+    }
+    for (var i = 0; i < up.length; i++) {
+        if (i < up.length / 2) {
+            up1.push(up[i]);
+        } else {
+            up2.push(up[i]);
+        }
+    }
+    for (var i = 0; i < correct_result.length; i++) {
+        if (i < correct_result.length / 2) {
+            correct_result1.push(correct_result[i]);
+        } else {
+            correct_result2.push(correct_result[i]);
+        }
+    }
+
+    all_a = new Array(new ari_obj(left1, right1, up1, correct_result1), new ari_obj(left2, right2, up2, correct_result2));
+
+}
+
+function getTimestamp() {
+    var now = new Date();
+    return now.getTime(); // in ms
+}
+
+function start() {
+    all_a = new Array(new ari_obj(left, right, up, correct_result));
+    document.getElementById('loading').style.display = "none";
+    start_time = getTimestamp();
+    any_key_start();
+}
+
+function show_loading() {
+    document.getElementById('imageObj').src = loading_image;
+    setTimeout("start()", start_delay);
+}
+
+window.onload = show_loading
+
+</script>
+
+</html>

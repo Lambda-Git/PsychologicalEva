@@ -1,0 +1,295 @@
+@CHARSET "UTF-8";
+
+* { 
+	margin: 0; padding: 0; 
+}
+body {
+	margin: 0 auto;
+	padding: 0;
+	background: #FFF; /*#F5F5F5*/
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #6666CC;
+}
+
+img {
+	border: 0px;
+}
+
+h1,h2,h3 {
+	margin: 0;
+	padding: 0;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: normal;
+	color: #F93D00;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 1.6em;
+}
+
+h3 {
+	font-size: 1.6em;
+}
+
+#wrapper {
+	width: 100%;
+	margin: 0 auto;
+	padding: 0;
+}
+
+/* Header */
+#header { /*
+	background: #E6E6FA;F5F5F5
+	*/
+	background: #6A5ACD;
+	width: 100%;
+	height: 85px;
+	margin: 0 auto;
+}
+
+/*********************** flip button class *************************************/
+.flipBtn {
+   font-size: 12px;
+  margin: 0 auto;
+  padding: 7px 13px;
+  background: #1e90ff;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'ChunkFive Regular', Tahoma, Helvetica;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-box-shadow: 1px 1px 2px #999999;
+  -webkit-box-shadow: 1px 1px 2px #999999;
+  -webkit-transition-duration: 1s;
+}
+.flipBtn:hover { background-color: #ff9000; }
+
+/*********************** AJAX_TABLE *************************************/
+.AJAX_TABLE_ID
+ {
+ 	
+  	width:100%;
+  	_width:98%; /* for IE6 only*/
+    color:blue;
+ }
+ .AJAX_TABLE_ID thead th 
+ {
+ 	 background:#7FFFD4;/*FFDEAD 91c5d4*/
+ 	 height:40px;
+ 	 padding:2px;
+     border:1px solid #fff;
+     border-width:0px 1px 1px 0px;
+ }
+ .AJAX_TABLE_ID td
+ {
+ 		height:30px;
+        padding:1px;
+        border:1px solid #fff;
+        border-width:0px 1px 1px 0px;
+}
+/*********************** view item table *************************************/
+.view_item_table
+{
+ 	
+  	width:100%;
+  	_width:98%; /* for IE6 only*/
+    color:blue;
+}
+.view_item_table td
+{
+ 		height:30px;
+        padding:1px;
+        border:1px solid #fff;
+        border-width:0px 0px 1px 0px;
+}
+/*********************** exercise dialog table *************************************/
+.exercise_dialog_table
+ {
+  	width:100%;
+  	_width:98%; /* for IE6 only*/
+  	/* height:100%; */
+  	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: normal;
+	font-size:16px;
+    color:blue;
+ }
+ .exercise_dialog_table thead th 
+ {
+ 	 background:#7FFFD4;/*FFDEAD 91c5d4*/
+ 	 height:40px;
+ 	 padding:2px;
+     border:1px solid #fff;
+     border-width:0px 1px 1px 0px;
+ }
+ .exercise_dialog_table td
+ {
+ 		height:30px;
+        padding:1px;
+}
+/*********************** TAB *************************************/
+#tab-container {
+	margin: 0 auto;
+	_width:98%; /* for IE6 only*/
+}
+
+#tabul {
+	padding: 0;
+	margin: 0;
+	padding: 5px 0px 1px 0px;
+	z-index: 10;
+}
+
+#tabul li {
+	display: inline;
+	-webkit-border-radius: .3em .3em 0 0;
+	-moz-border-radius: .3em .3em 0 0;
+	border-radius: .3em .3em 0 0;
+	cursor: pointer;
+}
+
+#addtab {
+	font-size: 16px;
+	text-decoration: none;
+	/* position: relative; */
+	top: 2px;
+	color: #333;
+}
+
+#addtab:hover {
+	color: #999;
+}
+
+.tab-ntabs {
+	background: #E0EEE0;
+	 margin-right: 1px; 
+	font-size: 12px;
+	font-weight: bold;
+	color: #333;
+	border: 1px solid #BDC7D5;
+	padding: 5px 3px 9px 8px;
+}
+
+.tab-ctab {
+	background: #87CEFF;
+	/*  position: relative; */
+	top: 2px;
+	border-bottom-width: 0;
+}
+
+.tab-close {
+	text-decoration: none;
+	color: #FFB90F;
+	font-weight: bold;
+	font-size: 14px;
+	padding: 0 4px;
+	-webkit-border-radius: .2em;
+	-moz-border-radius: .2em;
+	border-radius: .2em;
+}
+
+.tab-close:hover {
+	background: #999;
+	color: #333;
+}
+
+#tabcontent {
+	z-index: -10;
+	/* position: relative; */
+	top: -1px;
+	border: 1px solid #BDC7D5;
+	/* background: #EEE; */
+	/* padding: 10px; */
+	text-align: center;
+	/* font-weight: bold; */
+	color: black;
+	/* font-size: 24px; */
+	
+}
+
+/*  ---------------------menu small icon background-------------------- */
+.myinfoui-myrecord
+{
+	padding-top:10px;
+	padding-left:1px;
+}
+
+.myinfoui-myrecord li a
+{
+	padding-left:10px;
+	clear: both;
+	padding-left: 30px;
+	background: url(../../image/icons/myinfo-ui-list-icons.png) no-repeat;
+	line-height: 21px;
+}
+/*  ---------------------klg compose user options table-------------------- */
+
+.klg_compose_exercise_options_table {
+ width: 100%;
+ padding: 0 0 8px 0;
+ margin: 0;
+}
+
+.klg_compose_exercise_options_table th{
+	font-size:14px;
+ font-weight: normal;
+ color: blue;
+ border-left: 1px solid #7B68EE;
+ border-bottom: 1px solid #7B68EE;
+ border-top: 1px solid #7B68EE;
+ border-right: 1px solid #7B68EE;
+ /* letter-spacing: 2px; */
+ text-align: center;
+ background-color: #EEEEEE;
+ height:42px;
+}
+
+.klg_compose_exercise_options_table td{
+ border-bottom: 1px solid #7B68EE;
+ border-left: 0px solid #7B68EE;
+ font-size:13px;
+ color: blue;
+ height:30px;
+}
+
+
+/*  ---------------------student module table-------------------- */
+
+#table_with_border {
+ width: 100%;
+ height:100%;
+ padding: 0;
+ margin: 0;
+}
+
+
+#table_with_border th {
+ font: bold 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+ border-right: 1px solid #C1DAD7;
+ border-bottom: 1px solid #C1DAD7;
+ border-top: 1px solid #C1DAD7;
+ letter-spacing: 2px;
+ text-align: left;
+ padding: 6px 6px 6px 12px;
+ background: #CAE8EA  no-repeat;
+ height: 24px;
+ background: url("../../image/forhome/images/img01.png") repeat-x scroll 0 0 white;
+}
+
+
+#table_with_border td {
+ border-right: 1px solid #C1DAD7;
+ border-bottom: 1px solid #C1DAD7;
+ background: #fff;
+ font-size:12px;
+ padding: 6px 6px 6px 12px;
+}
+
+#table_with_border .first_column {
+border-left: 1px solid #C1DAD7;
+}

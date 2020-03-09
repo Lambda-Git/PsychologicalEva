@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="pragma" content="no-cache">
+		<!-- HTTP 1.0 -->
+		<meta http-equiv="cache-control" content="no-cache">
+		<!-- Prevent caching at the proxy server -->
+		<meta http-equiv="expires" content="0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="./css/mui.min.css" rel="stylesheet" />
+		<link href="./css/common.css" rel="stylesheet"  />
+        <!--动画库-->
+        <link href="./css/animate.css" rel="stylesheet"  />
+		<link rel="stylesheet" type="text/css" href="./css/icons-extra.css" />
+		<style>
+			.titlePng {
+				width: 100%;
+			}
+			.curUser {
+				font-weight: 600;
+				color: #fffaea;
+				font-size: 20px;
+				margin: auto;
+				position: absolute;
+				top: 15px;
+				left: 0;
+				bottom: 0;
+				right: 0;
+			}
+			p.type_title {
+                color: #00c1de;
+			    font-size: 18px;
+			    font-weight: bold;
+			}
+			img.type {
+				width: 50%;
+			}
+			.meun {
+				width: 100%;
+			}
+			.mui-row .mui-col-sm-4 {
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="myContent">
+			<div class="mui-row title" style="margin-top: 30px;">
+				<div class="mui-col-sm-3">
+					<img class="goLeft" onclick="goNext('login.html')" src="image/icon/goLeft.png" />
+				</div>
+				<div class="mui-col-sm-6" style="text-align: center;">
+					<p class="curUser"></p>
+					<img class="titlePng"  src="image/welcome.png" />
+				</div>
+				<div class="mui-col-sm-3" style="text-align: center;">
+					<img src="image/help.png"/>
+				</div>
+			</div>
+			<div class="mui-row meun">
+		        <div class="mui-col-sm-4"></div>
+		        <div class="mui-col-sm-4" onclick="goTo(1)">
+		            <img class="type animated zoomIn" src="image/type_1.png" />
+		            <p class="type_title">认知能力测评(当前状态</p>
+		        </div>
+		        <div class="mui-col-sm-4"></div>
+		    </div>
+		</div>
+
+	</body>
+
+    <script src="./js/jquery.min.js"></script>
+	<script src="./js/mui.min.js"></script>
+    <script src="./js/common.js"></script>
+	<script type="text/javascript" charset="utf-8">
+            var clickMusic = new Audio('mp3/click.mp3');
+			$('.curUser').html('欢迎' +userInfo.userName+ '同学');
+			/*按钮加载效果*/
+			mui(document.body).on('tap', '.mui-btn', function(e) {
+				mui(this).button('loading');
+				setTimeout(function() {
+					mui(this).button('reset');
+				}.bind(this), 2000);
+			});
+			function goTo(go) {
+				clickMusic.play();
+				if(go === 1) {
+					setTimeout(function(){
+						mui.openWindow({
+						url: './task_1/task_list.html',
+						createNew: true,
+						styles: {
+							cachemode:"noCache",
+						}
+					});
+					}, 500);
+				} else if (go === 2) {
+                    setTimeout(function(){
+                        mui.toast('建设中...敬请期待!',{ duration:'long', type:'div' })
+                    }, 500);
+				}
+			}
+	</script>
+
+</html>

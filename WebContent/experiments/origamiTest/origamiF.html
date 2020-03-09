@@ -1,0 +1,329 @@
+<!doctype html>
+<!--
+taskid: 3074
+taskid: 3074
+projectid: 1812
+targetpagename: test/Testing.jsp
+username: null
+sumitcoids: 1065
+save_to_local_checkbox: 0
+save_to_server_checkbox: 1
+local_saved_disk: null
+sequence: 0
+radioset: 1;1;1;2;3;4;5;5;5;5;5;2;2;2;4;2;4;1
+numset: ;;;;;;;;;;;;;;;;;
+commentset: {1}
+correctanswerset: 2;4;3;2;5;5;1;4;2;3;1;5;2;1;5;3;4;2
+timeset: 3667;9347;1240;1166;2447;1103;2414;2239;1791;1526;1176;25423;1512;1758;1751;1272;1142;2118
+timeaverage: 1751
+asum: 0
+bsum: 0
+csum: 0
+dsum: 0
+esum: 0
+fsum: 0
+gsum: 0
+hsum: 0
+isum: 0
+jsum: 0
+ksum: 0
+lsum: 0
+msum: 0
+nsum: 0
+osum: 0
+psum: 0
+stimidset: 1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18
+type4set: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+buttonset: ;;;;;;;;;;;;;;;;;
+eventtimeset:
+medianRTButton_ByType_Corrected: null
+countOfCorrectNumber_ByType: null
+countOfCorrectButton_ByType: null
+countOfCorrectRadio_ByType: 3
+countOfCorrectButton_ByType_Corrected: null
+percentageCorrectNumber_ByType: null
+percentageCorrectButton_ByType: null
+percentageCorrectRadio_ByType: 17
+meanNumber_ByType: null
+maxNumber_ByType: null
+sumNumber_ByType: null
+meanRT_ByType: 3505.11
+meanDeviationNumber_ByType: null
+sumWeightedRadio_ByType: 3
+type4_Unique: 1
+comment_ByType: null
+-->
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>折纸测验(正式)</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../../css/common.css" rel="stylesheet"  />
+    <link rel="stylesheet" type="text/css" href="../../../css/icons-extra.css" />
+    <style>
+        input.isSure {
+            display: none;
+        }
+        .firstHidden {
+            display: none;
+        }
+        .myContent {
+            margin:0 0 0 0;
+            overflow:hidden hidden;
+        }
+        .qesImg {
+            max-width: 90%;
+            height: 140px;
+        }
+        .answerImg {
+        	text-align: center;
+        }
+        .answerImg img {
+        	width: 80%;
+        }
+        .seleselectImg {
+    	    box-shadow: 0px 1px 15px #1296db;
+        }
+        .question {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<form id="result" name="result" method="post" action="" style="display: none">
+    <input type=hidden value="3074" name="taskid" id="taskid"/>
+    <input type=hidden value="0" name="sumitcoids" id="sumitcoids"/>
+    <input type=hidden value="0" name="targetpagename" id="targetpagename"/>
+    <input type=hidden value="origamiF" name="taskIdentifier" id="taskIdentifier"/>
+</form>
+<div class="myContent">
+    <div class="mui-row introduce" style="margin-top: 150px">
+        <div class="mui-row" style="text-align: center">
+            <button id="startTest" type='button' class='mui-btn mui-btn-primary startBtn'>开始正式测试</button>
+        </div>
+    </div>
+    <div class="mui-row formalResult active">
+        <div class="mui-col-sm-3"></div>
+        <div class="mui-col-sm-6">
+            <img src="../../images/smile1.gif" style="width: 150px;" />
+            <h3 style="color: black">请联系老师，获得测评结果!</h3>
+            <button id="formalTo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">点击返回任务列表</button>
+        </div>
+        <div class="mui-col-sm-3"></div>
+    </div>
+    <div class="mui-row question"></div>
+</div>
+
+</body>
+
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script type="text/javascript">
+    function goNext() {
+        setTimeout(function(){
+            mui.openWindow({
+                url: '../../../task_1/task_list.html',
+                createNew: true,
+                styles: {
+                    cachemode:"noCache",
+                }
+            });
+        }, 500);
+    };
+    //游戏开始
+    mui(document.body).on('tap', '#startTest', function(e) {
+        setTimeout(function(){
+            $('.introduce').addClass('active');
+            for(var i = 0;i<questionImgArray.length;i++) {
+                var j = i+1;
+                var str = '<div id="q_'+j+'" class="firstHidden">'+
+                            '<div class="mui-row" style="text-align: center;">'+
+                                '<img class="qesImg" src="task_3_img/t'+j+'.png">' +
+                              '</div>' +
+                            '<div class="mui-row answerImg">' +
+                                '<div class="mui-col-sm-1"></div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_1" src="task_3_img/t'+j+'_1.png" onclick="selected(1)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_2" src="task_3_img/t'+j+'_2.png" onclick="selected(2)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_3" src="task_3_img/t'+j+'_3.png" onclick="selected(3)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_4" src="task_3_img/t'+j+'_4.png" onclick="selected(4)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_5" src="task_3_img/t'+j+'_5.png" onclick="selected(5)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-1"></div>' +
+                            '</div>' +
+                            '<div class="mui-row">' +
+                                '<div class="mui-col-sm-2">' +
+                                    // '<span style="margin-left: 25px;">'+ j +'</span>/<span>'+ questionImgArray.length +'</span>题' +
+                                '</div>' +
+                                '<div class="mui-col-sm-8" style="text-align: center;">' +
+                                    '<input class="isSure" style="background: #1296db;width: 80px;border-radius: 20px;font-size: 20px;margin-left: 20px;" type="button" value="确定" onclick="nextTask('+j+')" />' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>';
+                $('.question').prepend(str);
+            }
+            $('#q_1').removeClass('firstHidden');
+            //答题事时间设置为4分钟 --超过4分钟会自动结束
+            setTimeout("getTimeout()",4*60*1000);
+        }, 0);
+    });
+
+    var curIndex = 1;
+
+    /*问题*/
+    var questionImgArray = ['t1','t2','t3','t4','t5','t6','t7','t8','t9','t10','t11','t21','t13','t14','t15','t16','t17','t18'];
+    /*正确答案*/
+    var correct_result = ['2','4','3','2','5','5','1','4','2','3','1','5','2','1','5','3','4','2'];
+    /*每道题目答题所需要的时间*/
+    timeset = ['3667','9347','1240','1166','2447','1103','2414','2239','1791','1526','1176','1512','1758','1751','1272','1142','2118'];
+
+    var resultTest = new Array(18);
+    var curRowSelect = 0; //当前行选择的答案
+
+    function selected(N) {
+        $("#q_"+curIndex+" .isSure").removeClass('isSure');
+        if(curRowSelect !== 0){
+            $("#q_"+curIndex+" #select_"+curRowSelect).removeClass('seleselectImg');
+        }
+        curRowSelect = N;
+        setTimeout(function(){
+            $("#q_"+curIndex+" #select_"+N).addClass('seleselectImg');
+            resultTest[curIndex] = N;
+        }, 0);
+    }
+
+    //进入下一道题目
+    function nextTask(curQuestion) {
+        setTimeout(function(){
+            curIndex ++;
+            $("#q_"+curIndex).removeClass('firstHidden');
+            var bankNumber = curIndex - 1;
+            $("#q_"+bankNumber).addClass('firstHidden');
+
+            //结束答题
+            if(curIndex === questionImgArray.length) {
+                mui.toast('答题结束!',{ duration:'long', type:'div' })
+                $('.question').addClass('active'); //隐藏questionDOM
+                //提交数据 结束
+                postFormInputData();
+            }
+        }, 0);
+    }
+
+
+    //超时
+    function getTimeout() {
+        mui.toast('答题超时',{ duration:'long', type:'div' });
+        $('.question').addClass('active'); //隐藏questionDOM
+        //超时 直接提交数据
+        postFormInputData();
+    }
+
+    function post_result() {
+        var corrects = new Array();
+        var users = new Array();
+        var usertime = new Array();
+        for (var i = 0; i < all_a.length; i++) {
+            var mdcobj = all_a[i];
+            corrects = add_array(corrects, get_related_result(mdcobj.correct_result_array, mdcobj.user_result.length));
+            users = add_array(users, mdcobj.user_result);
+            usertime = add_array(usertime, mdcobj.user_time);
+        }
+
+        add_result("eventtimeset", eventTime.join(";"));
+        add_result("correct_result", corrects.join(";"));
+        add_result("correctanswerset", corrects.join(";"));
+        add_result("user_result", users.join(";"));
+        add_result("buttonset", users.join(";"));
+        add_result("user_time", usertime.join(";"));
+        add_result("timeset", usertime.join(";"));
+        add_result("duration", getTimestamp() - start_time);
+        add_result("timeaverage", getTimestamp() - start_time);
+        add_result("stimidset", stimidAll.join(";"));
+        add_result("type4set", type4All.join(";"));
+
+        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////
+        var stimidset = stimidAll.join(";");
+        var type4set = type4All.join(";");
+        var timeset = usertime.join(";");
+        var buttonset = users.join(";");
+        var correctanswerset = corrects.join(";");
+        var numset = "";
+        var radioset = "";
+        var radiolist1set = "";
+        var radiolist2set = "";
+        var radiolist3set = "";
+        var radiolist4set = "";
+        var radiolist5set = "";
+        var radiolist6set = "";
+        var radiolist7set = "";
+        var radiolist8set = "";
+        var radiolist9set = "";
+        var radiolist10set = "";
+
+        if (corrects.length > 1) {
+            for (var i = 0; i < corrects.length - 1; i++) {
+                numset = numset + ";" + "";
+                radioset = radioset + ";" + "";
+                radiolist1set = radiolist1set + ";" + "";
+                radiolist2set = radiolist2set + ";" + "";
+                radiolist3set = radiolist3set + ";" + "";
+                radiolist4set = radiolist4set + ";" + "";
+                radiolist5set = radiolist5set + ";" + "";
+                radiolist6set = radiolist6set + ";" + "";
+                radiolist7set = radiolist7set + ";" + "";
+                radiolist8set = radiolist8set + ";" + "";
+                radiolist9set = radiolist9set + ";" + "";
+                radiolist10set = radiolist10set + ";" + "";
+            }
+        }
+        var countOfCorrectNumber_ByType = getCorrectCountSortByType(numset, correctanswerset, type4set);
+        var countOfCorrectButton_ByType = getCorrectCountSortByType(buttonset, correctanswerset, type4set);
+        var countOfCorrectRadio_ByType = getCorrectCountSortByType(radioset, correctanswerset, type4set);
+        var countOfCorrectButton_ByType_Corrected = getCorrectCountSortByType_Corrected(buttonset, correctanswerset, type4set);
+        var percentageCorrectNumber_ByType = getPercentageCorreceSortByType(numset, correctanswerset, type4set);
+        var percentageCorrectButton_ByType = getPercentageCorreceSortByType(buttonset, correctanswerset, type4set);
+        var percentageCorrectRadio_ByType = getPercentageCorreceSortByType(radioset, correctanswerset, type4set);
+        var meanNumber_ByType = getMeanSortByType(numset, type4set);
+        var sumNumber_ByType = getSumSortByType(numset, type4set);
+        var meanRT_ByType = getMeanSortByType(timeset, type4set);
+        var meanDeviationNumber_ByType = getMeanDeviationSortByType(numset, correctanswerset, type4set);
+        var sumWeightedRadio_ByType = getWeightedScoreSortByType(radioset, type4set, radiolist1set, radiolist2set, radiolist3set, radiolist4set, radiolist5set, radiolist6set, radiolist7set, radiolist8set, radiolist9set, radiolist10set);
+        var type4_Unique = getType(type4set);
+        add_result("countOfCorrectNumber_ByType", countOfCorrectNumber_ByType);
+        add_result("countOfCorrectButton_ByType", countOfCorrectButton_ByType);
+        add_result("countOfCorrectRadio_ByType", countOfCorrectRadio_ByType);
+        add_result("countOfCorrectButton_ByType_Corrected", countOfCorrectButton_ByType_Corrected);
+        add_result("percentageCorrectNumber_ByType", percentageCorrectNumber_ByType);
+        add_result("percentageCorrectButton_ByType", percentageCorrectButton_ByType);
+        add_result("percentageCorrectRadio_ByType", percentageCorrectRadio_ByType);
+        add_result("meanNumber_ByType", meanNumber_ByType);
+        add_result("sumNumber_ByType", sumNumber_ByType);
+        add_result("meanRT_ByType", meanRT_ByType);
+        add_result("meanDeviationNumber_ByType", meanDeviationNumber_ByType);
+        add_result("sumWeightedRadio_ByType", sumWeightedRadio_ByType);
+        add_result("type4_Unique", type4_Unique);
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // document.getElementById("result").submit(); //web端为form表单提交
+        //隐藏table 占高度影响
+        $('table').addClass('active');
+        postFormInputData();
+    }
+
+</script>
+
+</html>

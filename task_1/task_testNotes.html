@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>测验须知</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet"  />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		<style>
+			.testNotes {
+                font-size: 15px;
+                line-height: 20px;
+                padding: 10px;
+			}
+			.posture {
+				width: 95%;
+				padding: 5px;
+			    border: 1px solid #94be88;
+			    -moz-box-shadow: 3px 3px 4px #000;
+			    -webkit-box-shadow: 3px 3px 4px #000;
+			    box-shadow: 3px 3px 4px #000;
+			    background: #fff;
+			    border-radius: 10px;
+			    margin-left: -18px;
+			}
+			.buttonType {
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="comIntroInfo">
+            <div class="mui-row">
+            	<div class="mui-col-sm-3">
+            		<img class="goLeft" onclick="goNext('task_list.html')" src="../image/icon/goLeft.png" />
+            	</div>
+            	<div class="mui-col-sm-6 title">
+                    <h3>测验须知</h3>
+                </div>
+            	<div class="mui-col-sm-3"></div>
+            </div>
+            <div class="mui-row">
+            	<div class="mui-col-sm-7">
+            		<div class="testNotes">
+                        1.我周围环境安静，适合测验;<br />
+                        2.我将手机调为静音及拒接电话状态;<br />
+                        3.我集中注意力，快而准地完成任务;<br />
+                        4.我坐在桌子旁，双手拿手机，眼睛与手机屏幕垂直，如右图：
+                    </div>
+            	</div>
+            	<div class="mui-col-sm-5">
+            		<img class="posture" src="../image/testNotes.png" />
+            	</div>
+            </div>
+            <div class="mui-row buttonType">
+            	<div class="mui-col-sm-6">
+            		<button id="isReadyFor" type="button" class="mui-btn mui-btn-primary">我准备好了</button>
+            	</div>
+            	<div class="mui-col-sm-6">
+            		<button id="waitMoment" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">再等等</button>
+            	</div>
+            </div>
+		</div>
+	</body>
+
+	<script src="../js/mui.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/jquery.min.js"></script>
+	<script type="text/javascript">
+    var clickMusic = new Audio('../mp3/click.mp3');
+    //获取task 编号
+    var type =GetQueryString('type');
+    mui(document.body).on('tap', '#isReadyFor', function(e) {
+        clickMusic.play();
+        mui(this).button('loading');
+        setTimeout(function() {
+            mui(this).button('reset');
+            mui.openWindow({
+                url: 'task_type.html?type='+ type,
+                createNew: true,
+                styles: {
+                    cachemode:"noCache",
+                }
+            });
+        }.bind(this), 500);
+    });
+    mui(document.body).on('tap', '#waitMoment', function(e) {
+        clickMusic.play();
+        mui(this).button('loading');
+        setTimeout(function() {
+            mui(this).button('reset');
+            mui.openWindow({
+                url: 'task_list.html',
+                createNew: true,
+                styles: {
+                    cachemode:"noCache",
+                }
+            });
+        }.bind(this), 500);
+    });
+
+	</script>
+
+
+</html>

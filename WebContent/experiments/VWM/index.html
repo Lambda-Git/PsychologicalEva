@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>视觉短时记忆</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="comIntroInfo">
+            <div class="mui-row" style="margin-top: 5px">
+                <div class="mui-col-sm-3">
+<!--                    <img class="goLeft" onclick="goNext('../../../task_1/task_type.html?type=1&practice=true')" src="../../../image/icon/goLeft.png" />-->
+                </div>
+                <div class="mui-col-sm-6 title">
+                    <h3>视觉短时记忆</h3>
+                </div>
+            </div>
+			<div class="mui-row">
+				<div class="info">
+					1.屏幕上将快速地相继呈现四个不规则图形，请努力记住前三个图形，并在第四个图形出现后进行判断。</br>
+					2.如果第四个图形在前面三个图形中出现过，请用左手手指按一下“左”按钮；如果第四个图形没有在前面三个图形中出现过，请用右手手指按一下“右”按钮。</br>
+					3.练习完成后进行正式测验，请集中注意力、又快速又准确地完成实验。
+				</div>
+			</div>
+            <div class="mui-row buttonType">
+                <button id="isTestGo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">练习<span class="mui-icon mui-icon-arrowright"></span></button>
+                <button id="isGameGo" type="button" class="mui-btn mui-btn-primary">正式测试<span class="mui-icon mui-icon-arrowright"></span></button>
+            </div>
+        </div>
+
+        <script src="../../../js/mui.min.js"></script>
+        <script src="../../../js/common.js"></script>
+        <script src="../../../js/jquery.min.js"></script>
+        <script type="text/javascript">
+            mui.init({
+                swipeBack:false, //关闭 --右滑关闭功能
+                keyEventBind: {
+                    backbutton: true,  //Boolean(默认true)
+                },
+            });
+            //获取当前url传参 --type
+            var type =GetQueryString('type');
+            if( type == 1) {
+                $('#isGameGo').css('display','none');
+                $('h3').text('视觉短时记忆(练习)');
+            } else if (type == 2) {
+                $('#isTestGo').css('display','none');
+                $('h3').text('视觉短时记忆(正式)');
+            }
+            var clickMusic = new Audio('../../../mp3/click.mp3');
+            mui(document.body).on('tap', '#isTestGo', function(e) {
+                clickMusic.play();
+                mui(this).button('loading');
+                setTimeout(function() {
+                    mui(this).button('reset');
+                    mui.openWindow({
+                        url: 'VWMFTest.html',
+                        createNew: true,
+                        styles: {
+                            cachemode:"noCache",
+                        }
+                    });
+                }.bind(this), 500);
+            });
+            mui(document.body).on('tap', '#isGameGo', function(e) {
+                clickMusic.play();
+                mui(this).button('loading');
+                setTimeout(function() {
+                    mui(this).button('reset');
+                    mui.openWindow({
+                        url: 'VWMF.html',
+                        createNew: true,
+                        styles: {
+                            cachemode:"noCache",
+                        }
+                    });
+                }.bind(this), 500);
+            });
+
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<!--
+taskid: 3074
+taskid: 3074
+projectid: 1812
+targetpagename: test/Testing.jsp
+username: null
+sumitcoids: 1065
+save_to_local_checkbox: 0
+save_to_server_checkbox: 1
+local_saved_disk: null
+sequence: 0
+radioset: 1;1;1;2;3;4;5;5;5;5;5;2;2;2;4;2;4;1
+numset: ;;;;;;;;;;;;;;;;;
+commentset: {1}
+correctanswerset: 2;4;3;2;5;5;1;4;2;3;1;5;2;1;5;3;4;2
+timeset: 3667;9347;1240;1166;2447;1103;2414;2239;1791;1526;1176;25423;1512;1758;1751;1272;1142;2118
+timeaverage: 1751
+asum: 0
+bsum: 0
+csum: 0
+dsum: 0
+esum: 0
+fsum: 0
+gsum: 0
+hsum: 0
+isum: 0
+jsum: 0
+ksum: 0
+lsum: 0
+msum: 0
+nsum: 0
+osum: 0
+psum: 0
+stimidset: 1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18
+type4set: 1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
+buttonset: ;;;;;;;;;;;;;;;;;
+eventtimeset:
+medianRTButton_ByType_Corrected: null
+countOfCorrectNumber_ByType: null
+countOfCorrectButton_ByType: null
+countOfCorrectRadio_ByType: 3
+countOfCorrectButton_ByType_Corrected: null
+percentageCorrectNumber_ByType: null
+percentageCorrectButton_ByType: null
+percentageCorrectRadio_ByType: 17
+meanNumber_ByType: null
+maxNumber_ByType: null
+sumNumber_ByType: null
+meanRT_ByType: 3505.11
+meanDeviationNumber_ByType: null
+sumWeightedRadio_ByType: 3
+type4_Unique: 1
+comment_ByType: null
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>折纸测验(测试)</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../../css/common.css" rel="stylesheet"  />
+    <link rel="stylesheet" type="text/css" href="../../../css/icons-extra.css" />
+    <style>
+        input.isSure {
+            display: none;
+        }
+        .firstHidden {
+            display: none;
+        }
+        .myContent {
+            margin:0 0 0 0;
+            overflow:hidden hidden;
+        }
+        .qesImg {
+            max-width: 90%;
+            height: 140px;
+        }
+        .answerImg {
+        	text-align: center;
+        }
+        .answerImg img {
+        	width: 80%;
+        }
+        .seleselectImg {
+    	    box-shadow: 0px 1px 15px #1296db;
+        }
+        .question {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="myContent">
+    <div class="mui-row introduce" style="margin-top: 150px">
+        <div class="mui-row" style="text-align: center">
+            <button id="startTest" type='button' class='mui-btn mui-btn-primary startBtn'>开始练习</button>
+        </div>
+    </div>
+    <div class="mui-row formalResult active">
+        <div class="mui-col-sm-3"></div>
+        <div class="mui-col-sm-6">
+            <img src="../../images/smile1.gif" style="width: 150px;" />
+        </div>
+        <div class="mui-col-sm-3"></div>
+    </div>
+    <div class="mui-row question"></div>
+</div>
+
+</body>
+
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script type="text/javascript">
+    function goNext() {
+        setTimeout(function(){
+            mui.openWindow({
+                url: '../../../task_1/task_list.html',
+                createNew: true,
+                styles: {
+                    cachemode:"noCache",
+                }
+            });
+        }, 500);
+    };
+    //游戏开始
+    mui(document.body).on('tap', '#startTest', function(e) {
+        setTimeout(function(){
+            $('.introduce').addClass('active');
+            for(var i = 0;i<questionImgArray.length;i++) {
+                var j = i+1;
+                var str = '<div id="q_'+j+'" class="firstHidden">'+
+                            '<div class="mui-row" style="text-align: center;">'+
+                                '<img class="qesImg" src="task_3_img/t'+j+'.png">' +
+                              '</div>' +
+                            '<div class="mui-row answerImg">' +
+                                '<div class="mui-col-sm-1"></div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_1" src="task_3_img/t'+j+'_1.png" onclick="selected(1)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_2" src="task_3_img/t'+j+'_2.png" onclick="selected(2)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_3" src="task_3_img/t'+j+'_3.png" onclick="selected(3)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_4" src="task_3_img/t'+j+'_4.png" onclick="selected(4)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-2">' +
+                                    '<img id="select_5" src="task_3_img/t'+j+'_5.png" onclick="selected(5)">' +
+                                '</div>' +
+                                '<div class="mui-col-sm-1"></div>' +
+                            '</div>' +
+                            '<div class="mui-row">' +
+                                '<div class="mui-col-sm-2">' +
+                                    // '<span style="margin-left: 25px;">'+ j +'</span>/<span>'+ questionImgArray.length +'</span>题' +
+                                '</div>' +
+                                '<div class="mui-col-sm-8" style="text-align: center;">' +
+                                    '<input class="isSure" style="background: #1296db;width: 80px;border-radius: 20px;font-size: 20px;margin-left: 20px;" type="button" value="确定" onclick="nextTask('+j+')" />' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>';
+                $('.question').prepend(str);
+            }
+            $('#q_1').removeClass('firstHidden');
+            //答题事时间设置为4分钟 --超过4分钟会自动结束
+            setTimeout("getTimeout()",4*60*1000);
+        }, 0);
+    });
+    var curIndex = 1;
+
+    var questionImgArray = ['t4','t9','t11','t14','t17'];
+    var resultTest = new Array(5);
+    var curRowSelect = 0; //当前行选择的答案
+
+    function selected(N) {
+        $("#q_"+curIndex+" .isSure").removeClass('isSure');
+        if(curRowSelect !== 0){
+            $("#q_"+curIndex+" #select_"+curRowSelect).removeClass('seleselectImg');
+        }
+        curRowSelect = N;
+        setTimeout(function(){
+            $("#q_"+curIndex+" #select_"+N).addClass('seleselectImg');
+            resultTest[curIndex] = N;
+        }, 0);
+    }
+
+    //进入下一道题目
+    function nextTask(curQuestion) {
+        setTimeout(function(){
+            curIndex ++;
+            $("#q_"+curIndex).removeClass('firstHidden');
+            var bankNumber = curIndex - 1;
+            $("#q_"+bankNumber).addClass('firstHidden');
+
+            //结束答题
+            if(curIndex === questionImgArray.length) {
+                mui.toast('答题结束!',{ duration:'long', type:'div' })
+                testFinish();
+            }
+        }, 0);
+    }
+
+
+    //超时
+    function getTimeout() {
+        mui.toast('答题超时',{ duration:'long', type:'div' });
+        testFinish();
+    }
+
+    /*结束跳转*/
+    function testFinish() {
+        $('.formalResult').removeClass('active');
+        $('.question').addClass('active');
+        mui.toast('练习结束!2秒后自动跳转正式任务页面!', {duration: 'long', type: 'div'})
+        setTimeout(function () {
+            mui.openWindow({
+                url: '../../../task_1/task_type.html?type=5&practice=true',
+                createNew: true,
+                styles: {
+                    cachemode: "noCache",
+                }
+            });
+        }, 2000);
+    }
+
+</script>
+
+</html>

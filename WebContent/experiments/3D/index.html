@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>三维心理旋转</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="comIntroInfo">
+            <div class="mui-row" style="margin-top: 5px">
+                <div class="mui-col-sm-3">
+                </div>
+                <div class="mui-col-sm-6 title">
+                    <h3>三维心理旋转</h3>
+                </div>
+            </div>
+			<div class="mui-row">
+				<div class="info">
+                    1.屏幕上方将呈现一个不规则图形，它经过旋转后会与下方呈现的两个图形中的一个相同，请判断它与哪一个相同。</br>
+                    2.如果它与屏幕左下方的图形相同，请用左手食指按一下“左”键；如果它与屏幕右下方的图形相同，请用右手食指按一下“右”键。</br>
+                    3.练习完成后进行正式测验，请集中注意力、又快速又准确地完成测验。
+				</div>
+			</div>
+            <div class="mui-row buttonType">
+                <button id="isTestGo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">练习<span class="mui-icon mui-icon-arrowright"></span></button>
+                <button id="isGameGo" type="button" class="mui-btn mui-btn-primary">正式测试<span class="mui-icon mui-icon-arrowright"></span></button>
+            </div>
+        </div>
+
+        <script src="../../../js/mui.min.js"></script>
+        <script src="../../../js/common.js"></script>
+        <script src="../../../js/jquery.min.js"></script>
+        <script type="text/javascript">
+        mui.init({
+            swipeBack:false, //关闭 --右滑关闭功能
+            keyEventBind: {
+                backbutton: true,  //Boolean(默认true)
+            },
+        });
+        //获取当前url传参 --type
+        var type =GetQueryString('type');
+        if( type == 1) {
+            $('#isGameGo').css('display','none');
+            $('h3').text('三维心理旋转(练习)');
+        } else if (type == 2) {
+            $('#isTestGo').css('display','none');
+            $('h3').text('三维心理旋转(正式)');
+        }
+        var clickMusic = new Audio('../../../mp3/click.mp3');
+        mui(document.body).on('tap', '#isTestGo', function(e) {
+            clickMusic.play();
+            mui(this).button('loading');
+            setTimeout(function() {
+                mui(this).button('reset');
+                mui.openWindow({
+                    url: '3DTest.html',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }.bind(this), 500);
+        });
+        mui(document.body).on('tap', '#isGameGo', function(e) {
+            clickMusic.play();
+            mui(this).button('loading');
+            setTimeout(function() {
+                mui(this).button('reset');
+                mui.openWindow({
+                    url: '3DF.html',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }.bind(this), 500);
+        });
+
+        </script>
+    </body>
+
+</html>

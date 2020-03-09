@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>任务列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet"  />
+		<link href="../css/animate.css" rel="stylesheet"  />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		<style>
+            img.headerBg {
+                width: 110%;
+            }
+            .myContent {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .slide-box{
+                display: -webkit-box;
+                overflow-x: scroll;
+                -webkit-overflow-scrolling:touch;
+            }
+            .slide-item{
+                width: 120px;
+                height: 175px;
+                margin-right: 25px;
+                text-align: center;
+            }
+            .practice {
+                margin-top: 55px;
+            }
+            .slide-item img {
+                /*width: 100%;*/
+                height: 100px;
+            }
+            .slide-item p {
+                color: black;
+                font-weight: bold;
+                font-size: 18px;
+            }
+            .formal p {
+                color: #ff6700;
+            }
+		</style>
+	</head>
+
+	<body>
+		<div class="myContent">
+            <div class="mui-row">
+                <div class="mui-col-sm-3">
+                    <img class="goLeft" onclick="goNext('../index.html')" src="../image/icon/goLeft.png" />
+                </div>
+                <div class="mui-col-sm-6" style="text-align: center">
+                    <img class="headerBg" src="../image/icon/headerTitleBg.png" />
+                </div>
+            </div>
+            <div class="mui-row slide-box">
+                <div class="slide-item formal practice">
+                    <img class="animated bounceInLeft" src="../image/type_1/1.png" onclick="goTask(1)" />
+                    <p>词语辨析测验</p>
+                </div>
+                <div class="slide-item formal">
+                    <img class="animated bounceInLeft" src="../image/type_1/2.png" onclick="goTask(4)" />
+                    <p>图形推理测验</p>
+                </div>
+                <div class="slide-item formal practice">
+                    <img class="animated bounceInLeft" src="../image/type_1/3.png" onclick="goTask(5)" />
+                    <p>三维心理旋转</p>
+                </div>
+                <div class="slide-item formal">
+                    <img class="animated bounceInLeft" src="../image/type_1/4.png" onclick="goTask(2)" />
+                    <p>视觉追踪测验</p>
+                </div>
+                <div class="slide-item formal practice">
+                    <img class="animated bounceInLeft" src="../image/type_1/5.png" onclick="goTask(3)" />
+                    <p>视觉短时记忆</p>
+                </div>
+
+            </div>
+		</div>
+	</body>
+
+	<script src="../js/mui.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/jquery.min.js"></script>
+	<script type="text/javascript">
+    var clickMusic = new Audio('../mp3/click.mp3');
+    //任务跳转
+    function goTask(go) {
+        clickMusic.play();
+        if(go === 1) {
+            setTimeout(function(){
+                mui.openWindow({ //词语辨析
+                    url: 'task_testNotes.html?type=1',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }, 500);
+        }else if (go === 2) {
+            setTimeout(function(){
+                mui.openWindow({  //视觉追踪
+                    url: 'task_testNotes.html?type=2',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }, 500);
+        }else if(go === 3 ) {
+            setTimeout(function(){
+                mui.openWindow({  //视觉短时记忆
+                    url: 'task_testNotes.html?type=3',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }, 500);
+        }
+        else if(go === 4 ) {
+            setTimeout(function(){
+                mui.openWindow({   //图形推理测验
+                    url: 'task_testNotes.html?type=4',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }, 500);
+        } else if(go === 5 ) {
+            setTimeout(function(){
+                mui.openWindow({   //三维心理旋转
+                    url: 'task_testNotes.html?type=5',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }, 500);
+        }
+    }
+	</script>
+
+
+</html>

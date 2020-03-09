@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>视觉追踪测验</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="comIntroInfo">
+            <div class="mui-row" style="margin-top: 5px">
+                <div class="mui-col-sm-3">
+<!--                    <img class="goLeft" onclick="goNext('../../../task_1/task_type.html?type=1&practice=true')" src="../../../image/icon/goLeft.png" />-->
+                </div>
+                <div class="mui-col-sm-6 title">
+                    <h3>视觉追踪测验</h3>
+                </div>
+            </div>
+			<div class="mui-row">
+				<div class="info">
+					1.请用目光追踪左边红色方格或黑色方格发出的线条。</br>
+                    2.在该线条末尾所对应的一组数字中，选择该线条发起端的数字。</br>
+                    3.追踪线条时只使用目光，不能使用手指或其他工具来追踪线条。</br>
+                    4.请又快又准确地完成。
+				</div>
+			</div>
+            <div class="mui-row buttonType">
+                <button id="isTestGo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">练习<span class="mui-icon mui-icon-arrowright"></span></button>
+                <button id="isGameGo" type="button" class="mui-btn mui-btn-primary">正式测试<span class="mui-icon mui-icon-arrowright"></span></button>
+            </div>
+        </div>
+
+        <script src="../../../js/mui.min.js"></script>
+        <script src="../../../js/common.js"></script>
+        <script src="../../../js/jquery.min.js"></script>
+        <script type="text/javascript">
+        mui.init({
+            swipeBack:false, //关闭 --右滑关闭功能
+            keyEventBind: {
+                backbutton: true,  //Boolean(默认true)
+            },
+        });
+        //获取当前url传参 --type
+        var type =GetQueryString('type');
+        if( type == 1) {
+            $('#isGameGo').css('display','none');
+            $('h3').text('视觉追踪测验(练习)');
+        } else if (type == 2) {
+            $('#isTestGo').css('display','none');
+            $('h3').text('视觉追踪测验(正式)');
+        }
+        var clickMusic = new Audio('../../../mp3/click.mp3');
+        mui(document.body).on('tap', '#isTestGo', function(e) {
+            clickMusic.play();
+            mui(this).button('loading');
+            setTimeout(function() {
+                mui(this).button('reset');
+                mui.openWindow({
+                    url: 'VisualTracingFTest.html',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }.bind(this), 500);
+        });
+        mui(document.body).on('tap', '#isGameGo', function(e) {
+            clickMusic.play();
+            mui(this).button('loading');
+            setTimeout(function() {
+                mui(this).button('reset');
+                mui.openWindow({
+                    url: 'VisualTracingF.html',
+                    createNew: true,
+                    styles: {
+                        cachemode:"noCache",
+                    }
+                });
+            }.bind(this), 500);
+        });
+
+        </script>
+    </body>
+
+</html>
+

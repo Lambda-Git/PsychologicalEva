@@ -1,0 +1,618 @@
+<!doctype html>
+<html>
+<head>
+    <title>词语辨析(正式)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="../../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../../css/common.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/icons-extra.css"/>
+
+    <script src="../../js/wz_jsgraphics/wz_jsgraphics.js" type=text/javascript></script>
+    <script src="../../js/Statistics/Statistics.js" type=text/javascript></script>
+    <script src="../../js/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui-1.9.1.custom.min.js" type="text/javascript"></script>
+    <script src="../../js/utils.js" type=text/javascript></script>
+    <script src="../../js/progress_bar.js" type=text/javascript></script>
+
+    <script src="../../../js/mui.min.js"></script>
+    <script src="../../../js/common.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+
+    <style type="text/css">
+
+        body {
+            margin: 0px;
+            background-color: #000000;
+            cursor: pointer;
+        }
+
+        span {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80pt;
+            color: #ffffff;
+        }
+
+        span.loading {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20pt;
+            color: #ffffff;
+        }
+
+        span.fixation {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80pt;
+            color: #ffffff;
+        }
+
+        span.message {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15pt;
+            color: #ffffff;
+        }
+
+        span.addsubmildiv {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20pt;
+            color: #ffffff;
+        }
+
+        span.asmdresult {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 30pt;
+            color: #ffffff;
+        }
+
+        span.myCanvasSpan {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20pt;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<div class="mui-row formalResult active">
+    <div class="mui-col-sm-3"></div>
+    <div class="mui-col-sm-6">
+        <img class="formalSmilelGif" src="../../images/smile1.gif" />
+        <h3>请联系老师，获得测评结果!</h3>
+        <button id="formalTo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">点击返回任务列表</button>
+    </div>
+    <div class="mui-col-sm-3"></div>
+</div>
+
+<form id="result" name="result" method="post" action="" style="display: none">
+    <input type=hidden value="12" name="taskid" id="taskid"/>
+    <input type=hidden value="0" name="sumitcoids" id="sumitcoids"/>
+    <input type=hidden value="0" name="targetpagename" id="targetpagename"/>
+    <input type=hidden value="wordassay" name="taskIdentifier" id="taskIdentifier"/>
+</form>
+
+<table height="50%" border=0px width="100%" border="0" style="margin-top: 110px">
+    <tr>
+        <td align="center" valign="middle">
+            <table cellspacing="0" border=0px cellpadding="0" width="100%" align="center" border="0">
+                <tr>
+                    <td align=center>
+                                <span id="loading" class="loading">
+                                    <img name="imageObj" id="imageObj" src="../../images/black_toosmall.jpg"/>
+                                    <br/>加载中...
+                                </span>
+                        <span id="upper" class="addsubmildiv"></span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align=center height=100px>
+                        <span id="nether" class="asmdresult"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<div id="stroopnum_tip" style="display:none;" class="stroopnum_tip_div">
+</div>
+<div id="myCanvas" style="display:none;" class="stroopnum_relax_tips_div">
+    <br/>
+    <span id="myCanvasSpan" class="myCanvasSpan"></span>
+</div>
+
+<div id="feed_back_div" style="display:none;" class="stroopnum_relax_tips_div">
+    <span id="message" class="message"></span>
+    <span><img name="messageimageObj" id="messageimageObj" src="../../images/black_toosmall.jpg"/></span>
+</div>
+
+<div id="button_pq" style="display:none;">
+    <div class="mui-row">
+        <div class="mui-col-sm-1"></div>
+        <div class="mui-col-sm-5" style="text-align: left">
+            <img name="button_q" id="img_Q" onclick="left_click()" src="../../images/button_Q.png"/>
+        </div>
+        <div class="mui-col-sm-5" style="text-align: right">
+            <img name="button_p" id="img_P" onclick="right_click()" src="../../images/button_P.png"/>
+        </div>
+        <div class="mui-col-sm-1"></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+var black_image = "../../images/black_toosmall.jpg";
+var pleased_image = "../../images/pleased.JPG";
+var depressed_image = "../../images/depressed.JPG";
+var loading_image = "../../images/ajax-loader(2).gif";
+
+var left = new Array("必须", "必定", "质询", "协议", "不日", "质疑", "趣味", "否则", "监测", "私自", "充斥", "考察", "宁愿", "品行", "积淀", "完美无缺", "踪影", "给以", "越发", "称奇", "囊括", "有毒", "居然", "馈赠", "日前", "该", "要害", "臆造", "径直", "确定", "只要/就", "理念", "震荡", "反省", "究竟", "采用", "鉴赏", "申述", "食言", "典范", "整治", "支使", "琢磨", "回避", "节余", "遴选", "精心", "态势", "弛缓", "甚至", "隐晦", "附议", "流逝", "饥馑", "查访", "赔偿", "抹杀", "前列", "清理", "衰退", "引领", "就范", "遏制", "宽容", "显然", "博彩", "形势", "抑制", "不免", "迷漫", "法治化", "不孝", "大概", "考查", "徜徉", "不免", "传播", "珍藏", "观看", "领会", "积淀", "漠视", "匮乏", "衬托", "及时", "免除", "失察", "绝不", "振荡", "彬彬有礼", "随遇而安", "恰如其分", "推托", "做客", "贯穿", "逐渐", "度过", "自许", "涵养", "淡泊", "包括", "急剧", "一再", "释怀", "竟自", "素养", "甄别");
+var right = new Array(" 必需", "必然", "质对", "协约", "翌日", "置疑", "兴味", "反之", "监控", "擅自", "充溢", "考查", "宁可", "品性", "积聚", "精彩绝伦", "踪迹", "给予", "更加", "称道", "涵盖", "有害", "竟然", "捐赠", "目前", "本", "重要", "编造", "径自", "决定", "只有/才", "观念", "振荡", "反思", "毕竟", "沿用", "鉴别", "申诉", "失言", "典型", "整改", "唆使", "捉摸", "规避", "结余", "筛选", "经心", "走势", "迟缓", "直至", "隐讳", "复议", "流失", "饥饿", "查询", "补偿", "扼杀", "前茅", "清算", "衰减", "领导", "屈服", "控制", "宽厚", "赫然", "博弈", "形式", "限制", "未免", "弥漫", "法制化", "不肖", "大约", "考察", "徘徊", "未免", "传扬", "隐藏", "观赏", "领略", "积累", "轻视", "匮缺", "烘托", "即时", "废除", "失查", "决不", "震荡", "温文尔雅", "安之若素", "恰到好处", "推脱", "作客", "贯串", "逐步", "渡过", "自诩", "修养", "淡薄", "囊括", "加剧", "一味", "忘怀", "径自", "素质", "鉴别");
+var up = new Array(" 人们在异国他乡为了生存不得不放弃自己原有的文明，（）首先放弃也最难放弃的就是母语。", "谈到决赛对手时，教练说，“这将（）是一场漂亮的比赛，在决赛中和他们会师是一次独一无二的机会。”", "面对两会代表、委员的依法(),有的官员虽然还不能圆满答复，但都表现出虚心接受、认真反思的态度。", " 在刚刚结束的国际动漫节上，杭州市有关部门与中国动画学会签订了合作（），准备共同培养动漫人才。", "距离同济大学校庆还有5天，世界各地的校友（）将启程，前往上海参加庆典。", "毋庸（），法兰西优秀的民族文化是人类历史上的一笔宝贵财富。", "小男孩一下子（）索然了，站在那里没有目标的东张西望。", "当浮力大于物体所受的重力时，物体上浮，（）物体下沉。", "国家有关部门的（）结果表明，广东大亚湾核电站运行一年，废液、废气排放量均大大低于国家标准。", "事发当日，看守所民警值班期间未认真履行看管职责，（）离岗，外出吃饭，造成在押人员脱管。", "像孩童第一次睁开眼睛看见阳光，作者目光是那样惊喜，（）着饱满的生气。", "应该以实际运用能力来（）我们的学习效果。", "老百姓说的好，（）常年无灾情，不可一日不防备。", "这小伙子的整体素质不错，（）诚实温和。", "古代先贤以强烈的人文关怀写下的大量的精彩警语，体现了丰富的民族智慧，（）了伟大的民族精神。", "杨柳青木板年画里，孩童各个健硕丰腴，人人新衣新裤，所有器物（），这都象征了生活的富足和吉祥。", "我掉首东顾，只见云雾弥漫，山峦隐现，绚烂的彩霞已经渺无（）！", "故乡的小溪永远在我的心中静静流淌，轻轻私语，（）我精神的抚慰。", "中韩围棋再度交锋，韩国队的实力不可小觑，中国队的水平（）高超，行家估计中国队的胜率较大。", "在青藏高原的雪山中也有热带风光，也长着香蕉和菠萝，这实在是一件令人啧啧（）的事。", "中国文物网日前公布了考古十大新发现的名单，这些“新发现”（）了旧石器至宋元时期的文化遗址。", "这里不光生长有益的植物，还有一些（）的植物，其中有一种小树，叶子像烟叶，花和叶子都有毒。", "那时，北大的学生好幸运，学生的借书证，（）可以借十本线装书。", "今年1月1日，中国26年来粮食接受联合国（）的历史画上句号。", "“保卫钓鱼岛”网站遭受黑客袭击，（）仍在修复当中。", "帕金森病是常见的中老年神经系统疾病，拳王阿里就患有（）病", "为了纪念世界反法西斯战争60周年，俄罗斯邀请了世界50多个国家和国际组织的（）人物参加庆典活动。", "在改革开放的新形势下，我们仍然要从实际情况出发，从中探索出固有的而不是（）的规律。", "放学的时间还没到，集体活动还没结束，你怎么能（）离开学校呢。", "建设文明寝室，首先要（）文明寝室的量化指标，再按指标对学生寝室进行考评。", "培养公民的法制观念是一个长期过程，（）从学生时代就进行法制教育，（）能起到潜移默化的作用。", "在市场经济快速发展的今天，企业经营（）、企业品牌、企业信誉等无形资产，对企业的生存发展至关重要。", "诸如“艾滋病”这样重大疾病的蔓延，将会引起社会（），各级政府必须高度重视，严密监控。", "近年来我国煤炭企业事故不断，造成了巨大的损失，有关责任人必须对此进行（），深刻认识问题的严重性。", "有人说日本车舒适，德国车稳重，但这（）只是个人的不同感受，购车人还是要亲自驾驶一下才能做出判断。", "生产维C最先进的两步法技术是由我国发明的，由于制药成本的降低，迫使辉瑞公司也不得不（）这一技术。", "如果看了时下一些渲染暴力的小说或电影以后，就盲目的去模仿，只能说这些读者没有足够的（）能力。", "第一次庭审时，原告法律师向法庭所作的（）,揭露了三年来原告在这起家庭暴力案件中遭受虐待的真相。", "人应当讲信用，对已经做出的允诺就决不（）。", "在建设中国特色社会主义的伟大实践中涌现出来的先进（），他们是时代的先锋，国家的脊梁。", "六部委联合开展环保专项（）行动，要求建立各级政府负责的环保工作这人制度，对工作不力的部门要通报批评。", "在台湾当局( )下, 所罗门群岛等国家要求将所谓台湾入联问题列入第62届联大议程, 中国政府对此坚决反对。", "一些旧的观念根深蒂固,然而在今天这个转型的时代,已经有很多人开始( )如何转换思维方式,以适应新的生活。", "有些企业在《劳动合同法》实施以前,开始解除那些工龄满十年的员工的劳动合同,以( )未来的经济补偿风险。", "华天饮食服务公司由于狠抓管理,杜绝铺张浪费,三个月下来,仅办公费一项就( )了五十万元。", "北京市知名食品企业与北京食品研究所,历时近两年,研发了200多个样品,从中( )出第一批“新北京特产”。", "这些由园艺工人( )培育的花卉,一定能把奥运期间的北京装点得更加美丽。", "近期,联合国粮家组织及世界银行等机构的专家对今后国际粮油价格的( )作出了预测。", "保健医生建议大家 ,在节日期间尽量做到心情( ),轻松度假,并且还为大家献上了一份健康套餐。", "许多造纸厂废水直接排放到了淮河,淮河水变得又黑又臭,导致许多水生动植物大量减少,( )灭绝。", "李安导演的《断臂山》直抵人类情感最敏感最( )的一面,将现实中不被人们所认知认同的真实情感表现出来。", "今年初,来自上海黄浦区的代表提出《尽快制定养犬管理若干规定》的议案,这份议案得到了与会27位代表的( )。", "许多古老文化在与时间的拔河中没能挺到最后。文化资源在历史长河中究竟( )了多少,恐怕没有人能估量得出。", "在被( )扫荡过无数次的非洲大陆,人们只能在废墟中凭吊和猜测辉煌的古代文明了。", "伊拉克拒绝允许伊科学家单独接受联合国武器核查人员的( ),这是美国方面不能接受的。", "县级以上人民政府依照法律规定的权限和程序,可以征收自然人,法人的不动产或者动产,但应当给予( )。", "过分强调竞争制度,过早专门化,这就会( )包括专业知识在内的一切文化生活所依存的那种精神。", "有关部门对大唐国际在环境保护方面的贡献给予肯定,认为它在脱硫和除尘方面走在了全国电力系统的( )。", "对于已经到来的土地增值税( )时代,市场在经历了短期紧张后,目前已经进入了理性对应时期。", "2007年夏天,美国次贷危机全面爆发,不少投资者预计,美国经济将日渐( ),全球原油需求也将随之下降。", "一篇评议写道:“20世纪,美国教会世界如何消费；如果中国要( )21世纪,它必须教会世界如何可持续发展”。", "最近一期《美国新闻》称，美国表面上要通过外交途径迫使伊朗（）。", "以美国副总统切尼为代表的鹰派认为“通过外交手段不能（）伊朗的核野心”。", "睚眦必报，只能说明你没有大度（）的气量；言语刻薄，则是一把双刃剑，最终也将割伤自己。", "“同一个世界，同一个梦想”、“我参与，我奉献，我快乐”等巨幅标语在北京的广场、街头（）在目。", "有考生表示，平行志愿、靠分数说话，体现的是硬碰硬的实力，而不是与他人（），心态应该理性平和。", "这句话告诫人们，在前进的过程中，（）越好，道路越平坦，越应该谨慎。", "传说汤显祖写《牡丹亭》至 “赏春香还是你旧罗裙”，（）不住，跑到柴房里落泪。", "妄图通过进一步改革，让官僚资产阶级突出自己的利益，无异于与虎谋皮，（）太天真了。", "焕之便从桌子抽斗里取出一支蜡烛，点上，插上烛台，把取下的残烛吹熄，刺鼻的油气立刻（）在小舱里。", "《公务员法》第一次将我国公务员制度以法律的形式明确下来，标志着中国公务员制度迈进了（）阶段。", "当代青少年既要努力学习书本知识，又要不断提高思想品行修养，若只有才学而无美德，也会成为（）子孙。", "未来几年，铁路终将会更加发达，2008年“京津城际快车”运行后，北京到天津的行驶时间（）只需半小时。", "在提拔干部的时候，党的各级组织要认真听取广大群众的意见，以便更好的（）干部。", "美丽的自然风光固然令人陶醉，但若能和几个情投意合的好朋友相与（）其间，会觉得更加惬意。", "我们的很多老师是南方人。他们说普通话（）夹杂一些方言，但时间一长我们不仅习惯了而且觉得亲切。", "每年，中央电视台都会评选出“感动中国”的年度人物，他们的事迹很快就会在神州大地上（）开来。", "如此美丽的湖波竟默默地被（）在如此遥远的地方。", "我真想告诉人们，都来（）青海湖独特的美。", "越来越多的人来这美丽的草原（）大自然的魅力。", "文史素养的养成，靠的是多年的熏陶和（）。", "由于长期（）人文学科的学习，人们的文史素养都在下降。", "精神生活的空虚，人们现在的文史素养已经到了相当（）的地步。", "以“好运北京”为主题的第二十届桃花节日前开幕，盛开的桃花争奇斗艳，（）了欢乐祥和喜庆的气氛。", "平时没有做到未雨绸缪，事发时才采取（）措施，临时抱佛脚，结果在突如其来的自然灾害面前难免陷于被动。", "温家宝在《政府工作报告》中指出，从秋季起，全面（）义务教育学杂费，这是促进教育公平的又一重大举措。", "高考统分出错事件是由计算机操作技术人员失误和招办相关工作人员（）直接导致的。", "省教育厅将对高考统分出错事件进行深入调查，并打算把处置工作和责任追究一抓到底，（）姑息。", "目前，中国股市已经运行到历史高位，在股指期货即将退出的预期下，大盘开始上演高位（）的行情。", "在宫廷，为了赢得比自己社会地位的人的好感，男人们不得不收敛自己，表现得毕恭毕敬，（）", "孔子弟子颜回以突出的德性、修养而著称。他家境贫苦，对别人无法忍受的生活，他却能（），自得其乐。", "少女眉如远山，目如秋水，粉面纯白，唇如朱点。那是一种（）的美。", "元旦晚会上，她（）嗓子坏了，怎么也不肯唱。", "整个假期，他没到人任何亲戚朋友家拜访，也没请任何人到他家（），一个人憋在家中搞他的艺术创作。", "这份报告整体内容十分庞杂，但各部分内容基本都（）一个原则，那就是以人为本。", "随着法定节日的制定，广大青少年学生，尤其是那些传统意识淡薄的人必将（）加深对我国传统文化的认识。", "人的一生应该怎样（）？每个人有每个人的选择，每个人有每个人的追求。", "春蚕一生没说过（）的话，那吐出的银丝就是丈量生命价值的尺子。", "走进学者家，室内的陈设处处充溢着主人的艺术（），让我们惊奇而叹服。", "因为法制观念的（），这个村的村民始终不知道自己砍伐山林的行为是违法行为。", "长春出版社1992年出版的《实用双向汉语大词典》词条多达6万余条，（）了现代汉语的绝大多数词汇。", "政府通过增加货币供应量填补财政赤字和庞大的公共开支，导致通货膨胀（）的现象在拉美国家间蔓延。", "有的教师对学生的见解不管是否做到，是否有道理，所做的只是（）地叫好或廉价地赞扬。", "万竿碧竹，郁郁葱葱，蔚为壮观，透出一派清韵，更让人难以（）。", "多少年来，中国希望举办奥运会的梦想（）成为现实，怎能不令人惊喜！", "公务员的科学（），在某种程度上影响了经济的增长方式和发展环境的变化。", "网络建构起一个真实又虚幻的美丽世界，但是，在网络交往中，必须学会（）对方是不是“自己的那杯茶”。");
+
+//var left=new Array("年轻","以致","氛围","瞬间","效力","从属","吝啬","得心应手","坦承","场合");
+//var right=new Array("年青","以至","气氛","时间","效劳","归属","吝惜","轻车熟路","坦陈","场所");
+//var block=new Array(" 改革开放30年后的今天，干部队伍的（）化建设已经有了制度保障。","现代科技的发展日新月异，（）从前的幻想今天都有可能成为现实。","我们演讲时往往先说一番幽默风趣的闲话，以激发听众兴趣，为与听众交流营造好良好的环境（）","近期，中国观众有幸目睹了来自意大利庞贝古城的遗珍，它们清晰的再现了古城被埋没前最后（）的情景。","在休斯顿火箭队（）的姚明，出席环保活动时说：“今后，我在任何情况下都拒绝食用鱼翅。”","书的封面设计（）于书籍出版发行的总体规划，同时必须结合书的内容特点和读者进行构思。","在你得到赞赏的同时，千万别（）你对别人的赞赏，因为人与人之间应该相互欣赏，共同进步。","我们在从事某项工作时，如果进展顺利，（），即使时间长一点，也很少感到疲乏。","某市负责人在接受媒体采访时表示，经济建设要注意环境保护；（）该市的环境保护仍然严重落后。","医院作为特殊的公共（），应该讲究语言得体，“欢迎你再来”这一类的语言是不宜随便使用的。");
+
+
+var left = new Array("事", "元", "雨", "小河", "升", "羊", "哪些", "宽敞", "爽快", "歌曲", "棵", "节省", "祝愿", "适应", "观看", "精致", "热烈", "成就", "安静", "三言两语", "不但", "演出", "辛苦", "飘扬", "为了", "理解", "鼓舞", "陆续", "机警", "如果", "淡薄", "茂盛", "掩盖", "伫立", "奖励", "必须", "文明", "聪明过分", "严守", "多少", "干枯", "消除", "即使", "不学无术", "完整", "灵敏", "尽管", "豁然开朗", "荣枯", "中止", "报怨", "尽管", "爆发", "引见", "品性", "推脱", "考察", "观赏", "积淀", "失言", "目前", "领会", "缺少", "发现", "珍藏", "宁可", "牟取", "趣味", "否则", "轻视", "举措", "削弱", "辛酸", "质疑", "该", "匮乏", "经心", "观察", "以至", "踪影", "径直", "忘怀", "给予", "恰如其分", "偏偏", "单薄", "形式", "渡过", "涵养", "充溢", "时间", "做客", "虽然", "不齿", "得心应手", "人头攒动", "表示", "称奇", "从属", "必需", "吝惜", "振荡", "宽容", "场合", "擅自", "徜徉", "温文尔雅", "有害", "迟缓", "氛围", "抹杀", "鉴赏", "拜访", "必定", "申诉", "甄别", "究竟", "即时", "流逝", "琢磨");
+var right = new Array("是", "园	", "语", "树林", "声", "阳", "那些", "宽阔", "凉爽", "歌唱", "颗", "节约", "祝福", "适合", "观赏", "细致", "激烈", "成绩", "平静", "一言半语", "虽然", "演员", "辛勤", "飘洒", "因为", "理睬", "鼓励", "连续", "机灵", "因为", "淡泊", "旺盛", "掩藏", "挺立", "激励", "必需", "闻名", "愚蠢至极", "恪守", "稍微", "干涸", "排除", "虽然", "不务正业", "完美", "灵活", "但是", "融会贯通", "发荣", "终止", "抱怨", "不管", "暴发", "引荐", "品行", "推托", "考查", "观看", "积累", "食言", "日前", "领略", "缺乏", "发明", "隐藏", "宁愿", "谋取", "兴味", "反之", "漠视", "措施", "消减", "心酸", "置疑", "本", "匮缺", "精心", "观测", "以致", "踪迹", "径自", "释怀", "给以", "恰到好处", "恰恰", "薄弱", "形势", "度过", "修养", "充斥", "瞬间", "作客", "即使", "不耻", "轻车熟路", "济济一堂", "显示", "称道", "归属", "必须", "吝啬", "震荡", "宽厚", "场所", "私自", "徘徊", "彬彬有礼", "有毒", "弛缓", "气氛", "扼杀", "鉴别", "走访", "必然", "申述", "鉴别", "毕竟", "及时", "流失", "捉摸");
+var up = new Array("老爷爷的故（&nbsp;&nbsp;&nbsp;&nbsp;）说不完。", "爷爷给我两（&nbsp;&nbsp;&nbsp;&nbsp;）钱，让我买橡皮。", "窗外下着小（&nbsp;&nbsp;&nbsp;&nbsp;）。", "（&nbsp;&nbsp;&nbsp;&nbsp;）是小鸟的家。", "太阳从东方（&nbsp;&nbsp;&nbsp;&nbsp;）起来了。", "太（&nbsp;&nbsp;&nbsp;&nbsp;）像一个红球。", "（&nbsp;&nbsp;&nbsp;&nbsp;）穿棉衣戴(dài)手套的人变胖了。", "（&nbsp;&nbsp;&nbsp;&nbsp;）的大厅留下了我们的欢声笑语。", "爸爸是个（&nbsp;&nbsp;&nbsp;&nbsp;）的人。", "祖国华诞之际，我们用不同的方式（&nbsp;&nbsp;&nbsp;&nbsp;）祖国。", "这是一（&nbsp;&nbsp;&nbsp;&nbsp;）高大的白杨树。", "现在全球都在呼吁（&nbsp;&nbsp;&nbsp;&nbsp;）用水。", "我们共同（&nbsp;&nbsp;&nbsp;&nbsp;）灾区的小朋友明天更美好。", "这些书很（&nbsp;&nbsp;&nbsp;&nbsp;）小学生读。", "公园的菊花盛开了，千姿百态，老师带我们去（&nbsp;&nbsp;&nbsp;&nbsp;）。", "办公室的桌子上放着一本（&nbsp;&nbsp;&nbsp;&nbsp;）的影集。", "数学课上，同学们就一道题讨论的很（&nbsp;&nbsp;&nbsp;&nbsp;）", "我们既要看到自己的（&nbsp;&nbsp;&nbsp;&nbsp;），又要看到自己的不足。", "上课铃响了，校园里很（&nbsp;&nbsp;&nbsp;&nbsp;）。", "小明在这儿坐了好半天，也没有（&nbsp;&nbsp;&nbsp;&nbsp;）。", "小武（&nbsp;&nbsp;&nbsp;&nbsp;）会打网球，而且会踢足球。", "（&nbsp;&nbsp;&nbsp;&nbsp;）就要开始了，观众们陆续走进剧院。", "小水珠不管白天还是黑夜，坚持不懈，（&nbsp;&nbsp;&nbsp;&nbsp;）地工作着。", "猛一抬头，她才看见窗外（&nbsp;&nbsp;&nbsp;&nbsp;）着的细细春雨。", "在古代，人们（&nbsp;&nbsp;&nbsp;&nbsp;）看得远，常常在国境上建造高高的瞭望楼。", "它觉得自己是百花中最寒碜的花，再也没有人会（&nbsp;&nbsp;&nbsp;&nbsp;）它了。", "老师经常（&nbsp;&nbsp;&nbsp;&nbsp;）我们，遇到了困难，要勇于克服。", "清晨，同学们背着书包（&nbsp;&nbsp;&nbsp;&nbsp;）来到学校。", "这孩子很（&nbsp;&nbsp;&nbsp;&nbsp;），只要大人一指点他就领会了。", "（&nbsp;&nbsp;&nbsp;&nbsp;）低温是促成冬眠的主要原因，所以当温度降到7摄氏度时，刺猬便进入了梦乡。", "因为法制观念的（&nbsp;&nbsp;&nbsp;&nbsp;），这个村的村民始终不知道自己砍伐山林的行为是违法行为。", "这棵大榕树有着（&nbsp;&nbsp;&nbsp;&nbsp;）的生命力。", "公主的美貌是被（&nbsp;&nbsp;&nbsp;&nbsp;）住了，其实公主的心灵很美。", "学校操场四周（&nbsp;&nbsp;&nbsp;&nbsp;）着许多高大的树木。", "在默默的思念中，我（&nbsp;&nbsp;&nbsp;&nbsp;）自己要有你那样的胸怀，你那样的目光。", "一只蜜蜂要酿造一公斤蜜，（&nbsp;&nbsp;&nbsp;&nbsp;）在一百万朵花上采集原料。", "长城是世界（&nbsp;&nbsp;&nbsp;&nbsp;）的奇迹之一，它像一条巨龙盘踞在中国北方的辽阔土地上。", "我那时真是（&nbsp;&nbsp;&nbsp;&nbsp;），总觉他说话不大漂亮，非自己插嘴不可，但他终于讲定了价钱；就送我上车。", "（&nbsp;&nbsp;&nbsp;&nbsp;）真诚助我们创造金色的人生。", "你比他只是（&nbsp;&nbsp;&nbsp;&nbsp;）差一点，其实两人不相上下。", "号称千年不死的胡杨林啊，在忍受了20余年的干渴后终于变成了（&nbsp;&nbsp;&nbsp;&nbsp;）的木乃伊。", "大型货运飞艇使用惰性气体代替了传统的氢，从而从根本上（&nbsp;&nbsp;&nbsp;&nbsp;）了发生火灾的可能。", "只要抓住机遇，机会就会永存，（&nbsp;&nbsp;&nbsp;&nbsp;）失败了也不必计较，因为失败是成功之母。", "有的家长认为子女阅读课外文学名著、参加社会活动就是（&nbsp;&nbsp;&nbsp;&nbsp;），这种观点失之偏颇。", "一切都要为构成（&nbsp;&nbsp;&nbsp;&nbsp;）的图画而存在，绝不允许有欠美伤美的败笔。", "物候观测使用的是“活的仪器”，是活生生的生物。它比气象仪器复杂得多，（&nbsp;&nbsp;&nbsp;&nbsp;）得多。", "花和人都会遇到各种各样的不幸，（&nbsp;&nbsp;&nbsp;&nbsp;）生命的长河是无止境的。只要拥有希望，一切都将过去。", "自由地读书不但有乐趣，而且常常能因书中某一隽永的的句子而（&nbsp;&nbsp;&nbsp;&nbsp;），并对人生某一方面产生一种难得的顿悟。", "物候学记录植物的生长（&nbsp;&nbsp;&nbsp;&nbsp;），动物的养育往来。", "岗位培训改变了只在学校接受教育的状况，一个人离开学校并不意味着学习的（&nbsp;&nbsp;&nbsp;&nbsp;）。", "做错事只能怪自己，不能（&nbsp;&nbsp;&nbsp;&nbsp;）别人。", "（&nbsp;&nbsp;&nbsp;&nbsp;）天气恶劣，游客们还是游兴盎然。", "山洪（&nbsp;&nbsp;&nbsp;&nbsp;），总共有三十多个村庄被毁坏。", "他们两位素未谋面，还要请你（&nbsp;&nbsp;&nbsp;&nbsp;）一下。", "这小伙子的整体素质不错，（&nbsp;&nbsp;&nbsp;&nbsp;）诚实温和。", "晚会上，她（&nbsp;&nbsp;&nbsp;&nbsp;）嗓子坏了，怎么也不肯唱。", "应该以实际运用能力来（&nbsp;&nbsp;&nbsp;&nbsp;）我们的学习效果。", "我真想告诉人们，都来（&nbsp;&nbsp;&nbsp;&nbsp;）青海湖独特的美。", "文史素养的养成，靠的是多年的熏陶和（&nbsp;&nbsp;&nbsp;&nbsp;）。", "人应当讲信用，对已经做出的允诺就决不（&nbsp;&nbsp;&nbsp;&nbsp;）。", "公司的网站遭受黑客袭击，（&nbsp;&nbsp;&nbsp;&nbsp;）仍在修复当中。", "越来越多的人来这美丽的草原（&nbsp;&nbsp;&nbsp;&nbsp;）大自然的魅力。", "他的设想不错，就是（&nbsp;&nbsp;&nbsp;&nbsp;）足够的勇气去付诸实施。", "电子显微镜的（&nbsp;&nbsp;&nbsp;&nbsp;）是显微镜技术发展过程中的革命。", "如此美丽的湖泊竟默默地被（&nbsp;&nbsp;&nbsp;&nbsp;）在如此遥远的地方。", "老百姓说的好，（&nbsp;&nbsp;&nbsp;&nbsp;）常年无灾情，不可一日不防备。", "必须坚决打击不法商人制假贩假（&nbsp;&nbsp;&nbsp;&nbsp;）暴利的犯罪行为。", "小男孩一下子（&nbsp;&nbsp;&nbsp;&nbsp;）索然了，站在那里没有目标的东张西望。", "当浮力大于物体所受的重力时，物体上浮，（&nbsp;&nbsp;&nbsp;&nbsp;）物体下沉。", "由于长期（&nbsp;&nbsp;&nbsp;&nbsp;）人文学科的学习，人们的文史素养都在下降。", "为了减少汽车对人类的危害，人们在努力寻找各种有力的（&nbsp;&nbsp;&nbsp;&nbsp;）。", "几名主力队员因伤病不能上场比赛，这支球队的实力有所（&nbsp;&nbsp;&nbsp;&nbsp;）。", "爷爷说他忘不了那一段（&nbsp;&nbsp;&nbsp;&nbsp;）的往事，也忘不了曾帮助过他的人。", "毋庸（&nbsp;&nbsp;&nbsp;&nbsp;），法兰西优秀的民族文化是人类历史上的一笔宝贵财富。", "帕金森病是常见的中老年神经系统疾病，拳王阿里就患有（&nbsp;&nbsp;&nbsp;&nbsp;）病。", "精神生活的空虚，人们现在的文史素养已经到了相当（&nbsp;&nbsp;&nbsp;&nbsp;）的地步。", "这些由园艺工人（&nbsp;&nbsp;&nbsp;&nbsp;）培育的花卉,一定能把北京装点得更加美丽。", "气象工作人员每天定点（&nbsp;&nbsp;&nbsp;&nbsp;）风力，详细记录并认真分析有关数据。", "现代科技的发展日新月异，（&nbsp;&nbsp;&nbsp;&nbsp;）从前的幻想今天都有可能成为现实。", "我掉首东顾，只见云雾弥漫，山峦隐现，绚烂的彩霞已经渺无（&nbsp;&nbsp;&nbsp;&nbsp;）！", "放学的时间还没到，集体活动还没结束，你怎么能（&nbsp;&nbsp;&nbsp;&nbsp;）离开学校呢。", "万竿碧竹，郁郁葱葱，蔚为壮观，透出一派清韵，更让人难以（&nbsp;&nbsp;&nbsp;&nbsp;）。", "故乡的小溪永远在我的心中静静流淌，轻轻私语，（&nbsp;&nbsp;&nbsp;&nbsp;）我精神的抚慰。", "少女眉如远山，目如秋水，粉面纯白，唇如朱点。那是一种（&nbsp;&nbsp;&nbsp;&nbsp;）的美。", "她反复问自己：“这次测试其他同学都过了，为什么（&nbsp;&nbsp;&nbsp;&nbsp;）我不及格？”", "相对于该片浓厚气氛的营造，影片在人物刻画方面明显的（&nbsp;&nbsp;&nbsp;&nbsp;）粗糙许多。", "这句话告诫人们，在前进的过程中，（&nbsp;&nbsp;&nbsp;&nbsp;）越好，道路越平坦，越应该谨慎。", "人的一生应该怎样（&nbsp;&nbsp;&nbsp;&nbsp;）？每个人有每个人的选择，每个人有每个人的追求。", "走进学者家，室内的陈设处处充溢着主人的艺术（&nbsp;&nbsp;&nbsp;&nbsp;），让我们惊奇而叹服。", "像孩童第一次睁开眼睛看见阳光，作者目光是那样惊喜，（&nbsp;&nbsp;&nbsp;&nbsp;）着饱满的生气。", "这些来自意大利庞贝古城的遗珍清晰的再现了古城被埋没前最后（&nbsp;&nbsp;&nbsp;&nbsp;）的情景。", "他年轻时（&nbsp;&nbsp;&nbsp;&nbsp;）他乡，大大丰富了他的阅历，为他日的创作打下了坚实的基础。", "他们心中依然珍藏着那段美好的回忆，（&nbsp;&nbsp;&nbsp;&nbsp;）他们已经远离了那段激情燃烧的岁月。", "那些见利忘义、损人利己的人，不仅为正人君子所（&nbsp;&nbsp;&nbsp;&nbsp;），还可能滑向犯罪的深渊。", "我们在从事某项工作时，如果进展顺利，（&nbsp;&nbsp;&nbsp;&nbsp;），即使时间长一点，也很少感到疲乏。", "礼堂内，数千名天文爱好者（&nbsp;&nbsp;&nbsp;&nbsp;），静心聆听这位享誉海内外的天文专家的精彩讲座。", "利用紫外线的光激发光的特性，可以将在可见光下看不见或看不清的席位痕迹（&nbsp;&nbsp;&nbsp;&nbsp;）出来。", "在青藏高原的雪山中也有热带风光，也长着香蕉和菠萝，这实在是一件令人啧啧（&nbsp;&nbsp;&nbsp;&nbsp;）的事。", "书的封面设计（&nbsp;&nbsp;&nbsp;&nbsp;）于书籍出版发行的总体规划，同时必须结合书的内容特点和读者进行构思。", "人们在异国他乡为了生存不得不放弃自己原有的文明，（&nbsp;&nbsp;&nbsp;&nbsp;）首先放弃也最难放弃的就是母语。", "在你得到赞赏的同时，千万别（&nbsp;&nbsp;&nbsp;&nbsp;）你对别人的赞赏，因为人与人之间应该相互欣赏，共同进步。", "诸如“艾滋病”这样重大疾病的蔓延，将会引起社会（&nbsp;&nbsp;&nbsp;&nbsp;），各级政府必须高度重视，严密监控。", "睚眦必报，只能说明你没有大度（&nbsp;&nbsp;&nbsp;&nbsp;）的气量；言语刻薄，则是一把双刃剑，最终也将割伤自己。", "医院作为特殊的公共（&nbsp;&nbsp;&nbsp;&nbsp;），应该讲究语言得体，“欢迎你再来”这一类的语言是不宜随便使用的。", "事发当日，看守所民警值班期间未认真履行看管职责，（&nbsp;&nbsp;&nbsp;&nbsp;）离岗，外出吃饭，造成在押人员脱管。", "美丽的自然风光固然令人陶醉，但若能和几个情投意合的好朋友相与（&nbsp;&nbsp;&nbsp;&nbsp;）其间，会觉得更加惬意。", "在宫廷，为了赢得比自己社会地位高的人的好感，男人们不得不收敛自己，表现得毕恭毕敬，（&nbsp;&nbsp;&nbsp;&nbsp;）。", "这里不光生长有益的植物，还有一些（&nbsp;&nbsp;&nbsp;&nbsp;）的植物，其中有一种小树，叶子像烟叶，花和叶子都有毒。", "保健医生建议大家 ,在节日期间尽量做到心情（&nbsp;&nbsp;&nbsp;&nbsp;）,轻松度假,并且还为大家献上了一份健康套餐。", "我们演讲时往往先说一番幽默风趣的闲话，以激发听众兴趣，为与听众交流营造好良好的环境（&nbsp;&nbsp;&nbsp;&nbsp;）。", "过分强调竞争制度,过早专门化,这就会（&nbsp;&nbsp;&nbsp;&nbsp;）包括专业知识在内的一切文化生活所依存的那种精神。", "如果看了时下一些渲染暴力的小说或电影以后，就盲目的去模仿，只能说这些读者没有足够的（&nbsp;&nbsp;&nbsp;&nbsp;）能力。", "整个假期，他没到任何亲戚朋友家（&nbsp;&nbsp;&nbsp;&nbsp;），也没请任何人到他家做客，一个人憋在家中搞他的艺术创作。", "谈到决赛对手时，教练说，“这将（&nbsp;&nbsp;&nbsp;&nbsp;）是一场漂亮的比赛，在决赛中和他们会师是一次独一无二的机会。”", "第一次庭审时，原告方律师向法庭所作的（&nbsp;&nbsp;&nbsp;&nbsp;）,揭露了三年来原告在这起家庭暴力案件中遭受虐待的真相。", "网络建构起一个真实又虚幻的美丽世界，但是，在网络交往中，必须学会（&nbsp;&nbsp;&nbsp;&nbsp;）对方是不是“自己的那杯茶”。", "有人说日本车舒适，德国车稳重，但这（&nbsp;&nbsp;&nbsp;&nbsp;）只是个人的不同感受，购车人还是要亲自驾驶一下才能做出判断。", "平时没有做到未雨绸缪，事发时才采取（&nbsp;&nbsp;&nbsp;&nbsp;）措施，临时抱佛脚，结果在突如其来的自然灾害面前难免陷于被动。", "许多古老文化在与时间的拔河中没能挺到最后。文化资源在历史长河中究竟（&nbsp;&nbsp;&nbsp;&nbsp;）了多少,恐怕没有人能估量得出。", "一些旧的观念根深蒂固,然而在今天这个转型的时代,已经有很多人开始（&nbsp;&nbsp;&nbsp;&nbsp;）如何转换思维方式,以适应新的生活。");
+var correct_result = new Array("Q", "Q", "Q", "P", "Q", "P", "P", "Q", "Q", "P", "Q", "P", "Q", "P", "P", "Q", "P", "P", "Q", "P", "Q", "Q", "P", "P", "Q", "P", "P", "Q", "P", "P", "Q", "P", "Q", "P", "P", "Q", "P", "Q", "P", "P", "Q", "P", "Q", "P", "P", "Q", "P", "Q", "Q", "P", "P", "Q", "P", "Q", "Q", "P", "P", "Q", "Q", "P", "Q", "P", "P", "P", "Q", "Q", "Q", "P", "P", "Q", "P", "Q", "Q", "P", "Q", "Q", "P", "P", "Q", "Q", "P", "Q", "Q", "P", "Q", "Q", "P", "P", "P", "Q", "P", "P", "Q", "Q", "Q", "P", "P", "Q", "Q", "P", "Q", "P", "Q", "P", "Q", "Q", "P", "Q", "P", "Q", "P", "P", "Q", "Q", "P", "Q", "P", "Q", "P", "Q");
+
+// zgl测试数据
+// var left=new Array("年轻");
+// var right=new Array("年青");
+// var up=new Array(" 改革开放30年后的今天，干部队伍的（）化建设已经有了制度保障。");
+
+var eventTime = new Array();
+
+var left1 = new Array();
+var right1 = new Array();
+var up1 = new Array();
+var correct_result1 = new Array();
+var left2 = new Array();
+var right2 = new Array();
+var up2 = new Array();
+var correct_result2 = new Array();
+
+var user_result = new Array();
+var rc_key = new Array();
+var rc_time = new Array();
+
+var timer_id;
+var index = 0;
+var trial_interval = 300; // interval between trials in ms
+var key_interval = 1000; // interval after key press in ms
+var fixation_interval = 400; //
+var blank_interval = 1000; //
+var short_blank_interval = 500; //
+var relax_interval = 2000;
+var feedback_interval = 2000;// feedback time
+var ifinite_wait_interval = 40000000;
+var start_delay = 1000; // in ms
+var undef_key = "undef";
+var undef_time = trial_interval;
+var timestamp;
+
+
+var jg = new jsGraphics("myCanvas");
+var midle_relax_interval = 2000;//
+var progressbar = 0;//
+var bar_length = 300;//
+var update_interval = midle_relax_interval / bar_length;//
+var current_index = 0;
+var current_start_time = getTimestamp();
+var ristrict_time = 5 * 60 * 1000;
+var all_a;
+
+var stimidAll = new Array();
+var type4All = new Array();
+
+mui(document.body).on('tap', '#formalTo', function(e) {
+    setTimeout(function() {
+        mui.openWindow({
+            url: '../../../task_1/task_list.html',
+            createNew: true,
+            styles: {
+                cachemode:"noCache",
+            }
+        });
+    }.bind(this), 1);
+});
+
+function ari_obj(l_array, r_array, up_array, correct_result_array) {
+    if (l_array.length != r_array.length) {
+        alert("l_array.length!=r_array.length");
+    }
+    if (l_array.length != up_array.length) {
+        alert("l_array.length!=up_array.length");
+    }
+    this.l_array = l_array;
+    this.r_array = r_array;
+    this.up_array = up_array;
+    this.correct_result_array = correct_result_array;
+    this.length = l_array.length;
+    this.user_result = new Array();
+    this.user_time = new Array();
+    return this;
+}
+
+/* 按任意键继续 */
+function any_key_start() {
+    current_start_time = getTimestamp();
+    current_index = 0;
+    document.getElementById("myCanvas").style.display = "none";
+    var stroopnum_tips = document.getElementById("stroopnum_tip");
+    stroopnum_tips.style.display = "block";
+    stroopnum_tips.innerHTML = "<div class='mui-row' style='text-align: center;'>" +
+        "<button type='button' class='mui-btn mui-btn-primary startBtn' onclick='ignor_key_press()'>开始正式测试</button>" +
+        "</div>";
+    document.onkeydown = ignor_key_press;
+    //如果是安卓、ios、ipad的情况下，显示图片，并且添加鼠标响应事件
+    if (is_iPad()) {
+        //如果是安卓、ios、ipad系统
+        document.getElementById("button_pq").style.display = "none"; //测试开始之前隐藏按钮
+        document.getElementById("button_pq").addEventListener("mousedown", ignor_key_press, true);
+    }
+}
+
+function ignor_key_press() {
+    document.getElementById("button_pq").style.display = "none"; //展示 移动端 点击按钮
+    current_start_time = getTimestamp();//record part start time
+    var stroopnum_tips = document.getElementById("stroopnum_tip");
+    stroopnum_tips.style.display = "none";
+    setTimeout("show_fixation()", blank_interval);
+    if (is_iPad()) {
+        document.getElementById("button_pq").removeEventListener("mousedown", ignor_key_press, true);
+    }
+}
+
+/* the beginning method, in actural it is show blank screen */
+function show_fixation() {
+    document.getElementById("feed_back_div").style.display = "none";
+    if (index < all_a.length) {
+        var need_ralex = (index < all_a.length - 1);//the last portion
+        if ((getTimestamp() - current_start_time > ristrict_time) || current_index >= all_a[index].length) {
+            index++;
+            if (need_ralex) {
+                document.getElementById("upper").innerHTML = " ";
+                document.getElementById("nether").innerHTML = " ";
+                document.getElementById("stroopnum_tip").innerHTML = " ";
+                document.getElementById("myCanvas").style.display = "block";
+                document.getElementById("myCanvasSpan").innerHTML = "<br/>请休息" + midle_relax_interval / 1000 + "秒钟，然后继续测试";
+                start_progressbar();
+                document.onkeydown = null;
+                setTimeout("any_key_start()", midle_relax_interval + 4000);
+            } else {
+                post_result();
+            }
+        } else {
+            setTimeout("change_view()", 0);
+
+        }
+    } else {
+        post_result();
+    }
+}
+
+function change_view() {
+    var stroop = all_a[index];
+    document.getElementById("upper").innerHTML = stroop.up_array[current_index];
+    document.getElementById("nether").innerHTML = stroop.l_array[current_index] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + stroop.r_array[current_index];
+
+    if (current_index == 0) {
+        StartEventTime = getTimestamp();
+        eventTime[current_index] = StartEventTime;
+    } else {
+        eventTime[current_index] = getTimestamp() - StartEventTime;
+    }
+    all_a[index].user_result[current_index] = undef_key;
+    all_a[index].user_time[current_index] = undef_time;
+
+    stimidAll[current_index] = current_index + 1;
+    type4All[current_index] = 0;
+
+    timestamp = getTimestamp();
+    current_index++;
+    //timer_id = setTimeout("show_fixation()",trial_interval);
+    if (is_iPad()) {
+        document.getElementById("button_pq").style.display = "block";//如果是ipad、安卓、ios则显示图片
+    }
+    document.onkeydown = key_down;
+}
+
+function add_result(id, value) {
+    var elem = document.createElement("input");
+    elem.setAttribute("type", "text");
+    elem.setAttribute("id", id);
+    elem.setAttribute("name", id);
+    elem.setAttribute("value", value);
+    document.getElementById("result").appendChild(elem);
+}
+
+function post_result() {
+    var corrects = new Array();
+    var users = new Array();
+    var usertime = new Array();
+    for (var i = 0; i < all_a.length; i++) {
+        var mdcobj = all_a[i];
+        corrects = add_array(corrects, get_related_result(mdcobj.correct_result_array, mdcobj.user_result.length));
+        users = add_array(users, mdcobj.user_result);
+        usertime = add_array(usertime, mdcobj.user_time);
+    }
+    /*
+    for(var i=0;i<all_a.length;i++)
+    {
+        var mdcobj=all_a[i];
+        alert(typeof(mdcobj.correct_result_array)+"   "+mdcobj.user_result.join(";"));
+        add_result("correct_result", mdcobj.correct_result_array.join(";"));
+        add_result("user_result", mdcobj.user_result.join(";"));
+        //add_result("user_time", rc_time.join(";"));
+    }
+    */
+    add_result("eventtimeset", eventTime.join(";"));
+    add_result("correct_result", corrects.join(";"));
+    add_result("correctanswerset", corrects.join(";"));
+    add_result("user_result", users.join(";"));
+    add_result("buttonset", users.join(";"));
+    add_result("user_time", usertime.join(";"));
+    add_result("timeset", usertime.join(";"));
+    add_result("duration", getTimestamp() - start_time);
+    add_result("timeaverage", getTimestamp() - start_time);
+    add_result("stimidset", stimidAll.join(";"));
+    add_result("type4set", type4All.join(";"));
+
+    ///////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
+    var stimidset = stimidAll.join(";");
+    var type4set = type4All.join(";");
+    var timeset = usertime.join(";");
+    var buttonset = users.join(";");
+    var correctanswerset = corrects.join(";");
+    var numset = "";
+    var radioset = "";
+    var radiolist1set = "";
+    var radiolist2set = "";
+    var radiolist3set = "";
+    var radiolist4set = "";
+    var radiolist5set = "";
+    var radiolist6set = "";
+    var radiolist7set = "";
+    var radiolist8set = "";
+    var radiolist9set = "";
+    var radiolist10set = "";
+
+    if (corrects.length > 1) {
+        for (var i = 0; i < corrects.length - 1; i++) {
+            numset = numset + ";" + "";
+            radioset = radioset + ";" + "";
+            radiolist1set = radiolist1set + ";" + "";
+            radiolist2set = radiolist2set + ";" + "";
+            radiolist3set = radiolist3set + ";" + "";
+            radiolist4set = radiolist4set + ";" + "";
+            radiolist5set = radiolist5set + ";" + "";
+            radiolist6set = radiolist6set + ";" + "";
+            radiolist7set = radiolist7set + ";" + "";
+            radiolist8set = radiolist8set + ";" + "";
+            radiolist9set = radiolist9set + ";" + "";
+            radiolist10set = radiolist10set + ";" + "";
+        }
+    }
+    var countOfCorrectNumber_ByType = getCorrectCountSortByType(numset, correctanswerset, type4set);
+    var countOfCorrectButton_ByType = getCorrectCountSortByType(buttonset, correctanswerset, type4set);
+    var countOfCorrectRadio_ByType = getCorrectCountSortByType(radioset, correctanswerset, type4set);
+    var countOfCorrectButton_ByType_Corrected = getCorrectCountSortByType_Corrected(buttonset, correctanswerset, type4set);
+    var percentageCorrectNumber_ByType = getPercentageCorreceSortByType(numset, correctanswerset, type4set);
+    var percentageCorrectButton_ByType = getPercentageCorreceSortByType(buttonset, correctanswerset, type4set);
+    var percentageCorrectRadio_ByType = getPercentageCorreceSortByType(radioset, correctanswerset, type4set);
+    var meanNumber_ByType = getMeanSortByType(numset, type4set);
+    var sumNumber_ByType = getSumSortByType(numset, type4set);
+    var meanRT_ByType = getMeanSortByType(timeset, type4set);
+    var meanDeviationNumber_ByType = getMeanDeviationSortByType(numset, correctanswerset, type4set);
+    var sumWeightedRadio_ByType = getWeightedScoreSortByType(radioset, type4set, radiolist1set, radiolist2set, radiolist3set, radiolist4set, radiolist5set, radiolist6set, radiolist7set, radiolist8set, radiolist9set, radiolist10set);
+    var type4_Unique = getType(type4set);
+    add_result("countOfCorrectNumber_ByType", countOfCorrectNumber_ByType);
+    add_result("countOfCorrectButton_ByType", countOfCorrectButton_ByType);
+    add_result("countOfCorrectRadio_ByType", countOfCorrectRadio_ByType);
+    add_result("countOfCorrectButton_ByType_Corrected", countOfCorrectButton_ByType_Corrected);
+    add_result("percentageCorrectNumber_ByType", percentageCorrectNumber_ByType);
+    add_result("percentageCorrectButton_ByType", percentageCorrectButton_ByType);
+    add_result("percentageCorrectRadio_ByType", percentageCorrectRadio_ByType);
+    add_result("meanNumber_ByType", meanNumber_ByType);
+    add_result("sumNumber_ByType", sumNumber_ByType);
+    add_result("meanRT_ByType", meanRT_ByType);
+    add_result("meanDeviationNumber_ByType", meanDeviationNumber_ByType);
+    add_result("sumWeightedRadio_ByType", sumWeightedRadio_ByType);
+    add_result("type4_Unique", type4_Unique);
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // document.getElementById("result").submit(); //web端为form表单提交
+    //隐藏table 占高度影响
+    $('table').addClass('active');
+    postFormInputData();
+}
+
+//将key_down函数拆成了key_down和key_input函数
+function key_down(e) {
+    var keyhit = check_keyhit(e);
+    if (!keyhit) {
+        return;
+    } else {
+        key_input(keyhit);
+    }
+}
+
+function key_input(keyhit) {
+    //if is the first type key q or p
+    if (all_a[index].user_result[current_index - 1] == undef_key) {
+        clearInterval(timer_id);
+        var key = undef_key;
+        if (keyhit == '81')// q
+        {
+            key = "Q";
+        }
+        if (keyhit == '87')// w
+        {
+            key = "P";
+        }
+        if (keyhit == '79')// O
+        {
+            key = "Q";
+        }
+        if (keyhit == '80')// p
+        {
+            key = "P";
+        }
+        all_a[index].user_result[current_index - 1] = key;
+
+        all_a[index].user_time[current_index - 1] = getTimestamp() - timestamp;
+        show_user_result();
+    }
+}
+
+//两个点击函数和判断ipad函数
+function right_click() {
+    key_input("80");
+}
+
+function left_click() {
+    key_input("79");
+}
+
+function is_iPad() {
+    //判断当前系统是安卓、ios、windows系统
+    var ua = navigator.userAgent.toLowerCase();
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+    var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    if (isAndroid) {
+        return true;
+    } else if (isIOS) {
+        return true;
+    } else if (ua.match(/iPad/i) == "ipad") {
+        return true;
+    } else {
+        return true;  //web端开发测试 暂时设置为true
+    }
+}
+
+function show_user_result() {
+    document.getElementById("upper").innerHTML = " ";
+    document.getElementById("nether").innerHTML = " ";
+    document.getElementById("feed_back_div").style.display = "block";
+    if (all_a[index].user_result[current_index - 1] == all_a[index].correct_result_array[current_index - 1]) {
+        //document.getElementById("upper").innerHTML = "<fmt:message key="jsp.eachtest.correctresponse"/>";
+        //document.getElementById('messageimageObj').src =pleased_image;
+    } else {
+        //document.getElementById("upper").innerHTML = "<fmt:message key="jsp.eachtest.wrongresponse"/>";
+        //document.getElementById('messageimageObj').src =depressed_image;
+    }
+    //测试结束--已经打印出结果
+    document.getElementById("button_pq").style.display = "none";
+    setTimeout("show_fixation()", feedback_interval);
+
+}
+
+function check_keyhit(e) {
+    var typed_key;
+    if (window.event) {
+        typed_key = window.event.keyCode;
+    } else {
+        typed_key = e.which;
+    }
+    //alert(typed_key);
+    if (typed_key == '81' || typed_key == '80' || typed_key == '79' || typed_key == '87') {
+        return typed_key;
+    } else {
+        // alert("wrong typed key! 'q' presents blue and 'p' presents red. ");
+        document.onkeydown = key_down;
+        return false;
+    }
+
+}
+
+function show_status_bar() {
+    //alert(jg);
+    jg.setColor("#ffeeaa");
+    jg.drawRect(20, 70, bar_length, 20);// x-pix y-pix width height
+    jg.paint();
+
+    jg.setColor("#00aaaa");
+    jg.fillRect(20, 70, progressbar, 20);
+    jg.paint();
+
+
+    if (progressbar < bar_length) {
+        setTimeout("show_status_bar()", update_interval);
+    }
+    progressbar++;
+
+}
+
+function start_progressbar() {
+    jg.clear();
+    progressbar = 0;
+    setTimeout("show_status_bar()", 0);
+}
+
+//for relax
+function split_left_right_up() {
+    for (var i = 0; i < left.length; i++) {
+        if (i < left.length / 2) {
+            left1.push(left[i]);
+        } else {
+            left2.push(left[i]);
+        }
+    }
+    for (var i = 0; i < right.length; i++) {
+        if (i < right.length / 2) {
+            right1.push(right[i]);
+        } else {
+            right2.push(right[i]);
+        }
+    }
+    for (var i = 0; i < up.length; i++) {
+        if (i < up.length / 2) {
+            up1.push(up[i]);
+        } else {
+            up2.push(up[i]);
+        }
+    }
+    for (var i = 0; i < correct_result.length; i++) {
+        if (i < correct_result.length / 2) {
+            correct_result1.push(correct_result[i]);
+        } else {
+            correct_result2.push(correct_result[i]);
+        }
+    }
+
+    all_a = new Array(new ari_obj(left1, right1, up1, correct_result1), new ari_obj(left2, right2, up2, correct_result2));
+
+}
+
+function getTimestamp() {
+    var now = new Date();
+    return now.getTime(); // in ms
+}
+
+function start() {
+    //split_left_right_up();
+    all_a = new Array(new ari_obj(left, right, up, correct_result));
+    document.getElementById('loading').style.display = "none";
+    start_time = getTimestamp();
+    any_key_start();
+}
+
+function show_loading() {
+    document.getElementById('imageObj').src = loading_image;
+    setTimeout("start()", start_delay);
+}
+
+
+window.onload = show_loading
+
+</script>
+
+
+</html>
