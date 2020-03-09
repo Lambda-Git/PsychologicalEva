@@ -47,6 +47,27 @@
 			.mui-row .mui-col-sm-4 {
 				text-align: center;
 			}
+			.mui-popover{
+				position: fixed;
+				width: 80%;
+				height: 70%;
+				border-radius: 20px;
+				left: 50%;
+				top: 50%;
+				margin: 0 auto;
+				z-index: 9999;
+				background-color: #fff;
+				-webkit-transform: translateX(-50%) translateY(-50%);
+				-moz-transform: translateX(-50%) translateY(-50%);
+				-ms-transform: translateX(-50%) translateY(-50%);
+				transform: translateX(-50%) translateY(-50%);
+			}
+			.introduceEva {
+				line-height: 25px;
+				font-family: "Times New Roman",Georgia,Serif;
+				padding: 30px;
+				text-indent: 2em;
+			}
 		</style>
 	</head>
 
@@ -67,18 +88,23 @@
 			</div>
 			<div class="mui-row meun">
 		        <div class="mui-col-sm-4">
-					<img class="type animated zoomIn" src="image/type1.png" />
+					<img id="openPopover" class="type animated zoomIn" src="image/type1.png" />
 					<p class="type_title">测评简介</p>
 				</div>
 		        <div class="mui-col-sm-4" onclick="goTo(1)">
 		            <img class="type animated zoomIn" src="image/type2.png" />
 		            <p class="type_title">开始测验</p>
 		        </div>
-		        <div class="mui-col-sm-4">
+		        <div class="mui-col-sm-4" onclick="goTo(2)">
 					<img class="type animated zoomIn" src="image/type3.png" />
 					<p class="type_title">获取报告</p>
 				</div>
 		    </div>
+			<div id="pop" class="mui-popover" >
+				<div class="introduceEva">
+					认知能力测评（当前状态）是融合心理学与脑科学，基于常模数据了解各项认知能力发展状况的测评体系。分为基础和学业认知能力测评。认知能力是大脑信息加工、存储和提取的能力，包括记忆、空间、注意等能力，是学生获得任何知识、技能的基础，所以也称之为学习能力。它对学习成绩、职业成就等具有显著预测作用。测评出的优势认知能力和待提高认知能力只是当前状态下的，认知能力并不是一成不变，具有巨大可塑性，可通过训练改变。
+				</div>
+			</div>
 		</div>
 
 	</body>
@@ -114,6 +140,17 @@
                     }, 500);
 				}
 			}
+            var pop = document.getElementById("pop");
+            var mask = mui.createMask(function(){
+                pop.classList.remove('mui-active');
+            });
+
+            // 显示
+            mui('#openPopover')[0].addEventListener('tap',function(){
+                mask.show();//显示遮罩
+                pop.classList.add('mui-active');
+            })
+
 	</script>
 
 </html>
