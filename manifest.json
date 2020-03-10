@@ -217,8 +217,7 @@
 					"xxhdpi": "image/appStart.png"
 				}
 			}
-		},
-		"adid": "122505280511"
+		}
 	},
 	"dependencies": {
 		"pages": {
