@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="./WebContent/css/bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./WebContent/css/radar.css"/>
+    <link rel="stylesheet" href="./WebContent/css/radar.css" media="print"/>
+    <link rel="stylesheet" href="./WebContent/css/bootstrap.css" media="print"/>
+    <title>心里测评报告</title>
+    <style>
+        @page {
+            size: auto; /* auto is the initial value */
+            margin: 0mm 10mm 0mm 10mm; /* this affects the margin in the printer settings 最关键的还是这个*/
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div id='div_tobe_print_id' style='height:1500px;padding: 32px'>
+    <div style="width:1024px;height:523px;overflow: hidden;" style="z-index:-1;position: absolute;"><img
+            src="./image/background2.jpg" width="1024"/></div>
+    <div id='starbox_out_div_id' class="starbox_out"
+         style="position:relative;top: -430px;box-sizing: border-box;"></div>
+    <div style="width:1024px;height: 980px;overflow: hidden;position: relative;top: -546px;">
+        <img src="./image/background2.jpg" width="1024" style="position: absolute;z-index:-2;top: -518px;"/>
+        <div class="big_text" style="top: 365px;line-height: 25px;font-size: 18px;"></div>
+        <div class="email">如有疑问可发送邮件至：<span id="bottom_email"></span></div>
+    </div>
+
+</div>
+<div style="text-align: center;position: fixed;bottom: 0px;width: 410px;left: 50%;margin-left: -208px;">
+    <button class="btn btn-info" type="button" style="margin: auto;width:200px;height:50px;" onclick="previous();">第一页</button>
+</div>
+
+<script src="./WebContent/js/jquery-1.8.2.min.js"></script>
+<script src="./WebContent/js/radar2.js"></script>
+<script src="./WebContent/js/echarts.min.js"></script>
+<script src="./WebContent/js/jquery-migrate-1.2.1.min.js"></script>
+
+<script type="text/javascript">
+    var dataset = localStorage.getItem('dataset');
+    var dataset_index = localStorage.getItem('dataset_index');
+    var dataset_condition = localStorage.getItem('dataset_condition');
+    var coid = localStorage.getItem('coid');
+    var coidpic_task = localStorage.getItem('coidpic_task');
+    var coidpic_whole = localStorage.getItem('coidpic_whole');
+    var projectid = localStorage.getItem('projectid');
+    var userid = localStorage.getItem('userid');
+    var title = localStorage.getItem('title');
+    var tasklogo = JSON.parse(localStorage.getItem('tasklogo'));
+    var shortinterpretation = localStorage.getItem('shortinterpretation');
+    var longinterpretation = localStorage.getItem('longinterpretation');
+    var taskdescription = localStorage.getItem('taskdescription');
+    var emailaddress = localStorage.getItem('emailaddress');
+
+    $('#starbox_out_div_id div').css({'box-sizing': 'border-box'});
+    if (getCookie("bottom_email")) {
+        $("#bottom_email").html(getCookie("bottom_email"));
+    }
+    //上一页
+    function previous() {
+        window.history.go(-1);
+    }
+
+
+</script>
+</body>
+</html>

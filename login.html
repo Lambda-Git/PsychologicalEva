@@ -121,8 +121,8 @@
     <script src="./js/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
             var clickMusic = new Audio('mp3/click.mp3');
-            mui('#account')[0].value = '1075492';
-            mui('#password')[0].value = '123456';
+            mui('#account')[0].value = '29019101200005';
+            mui('#password')[0].value = '1111111111111111';
             /*按钮加载效果*/
             mui(document.body).on('tap', '.mui-btn', function(e) {
                 mui(this).button('loading');
@@ -158,6 +158,7 @@
                                     localStorage.setItem('userInfo',JSON.stringify(userInfo))
                                     localStorage.setItem('access_token',data.access_token)
                                     localStorage.setItem('uid',data.uid)
+                                    localStorage.setItem('userType',data.userType)
                                     //登录成功--跳转
                                     mui.openWindow({
                                         url: 'index.html',

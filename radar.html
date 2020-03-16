@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8"/>
+    <link href="./WebContent/css/bootstrap.css" rel="stylesheet"/>
+    <link href="./WebContent/css/radar.css" rel="stylesheet" />
+    <link href="./WebContent/css/radar.css" rel="stylesheet" media="print"/>
+    <link href="./WebContent/css/bootstrap.css" rel="stylesheet" media="print"/>
+    <title>心里测评报告</title>
+</head>
+
+<body>
+<img class="goLeft" onclick="goNext('index.html')" src="image/icon/goLeft.png" />
+<img id='background_img_id' src="./image/background_blank.jpg" width="100%" height='100%' style="z-index:-1;position: absolute;" />
+<div id='div_tobe_print_id' style="z-index:99;position: relative;">
+    <div class="header_box" style="position: absolute;width:100%">
+        <br><br><br>
+        <span id="en_title"></span>
+        <div id="ch_title" class="big_title">--</div>
+        <span style="font-size:18px;margin-top:6px;display: inline-block;" id="mini_title"></span>
+    </div>
+    <div class="text">
+        <div class="textbox username">姓名：getUserName</div>
+        <div class="textbox sexual">性别：gender</div>
+        <div class="textbox age">生日：getBirthday</div>
+    </div>
+    <div id="outer_box">
+        <div id="inner_box" style="background: #eee;width:100%;min-height:100px;z-index:999"></div>
+    </div>
+</div>
+<div style="text-align: center;position: relative;bottom: 0px;">
+    <button class="btn btn-info" type="button" style="margin: auto;width:200px;height:50px;" onclick="next();">下一页</button>
+</div>
+<!--<img src="../Users\report\<%=coidpic_whole%>\<%=pr.getProjectid() %>\<%=pr.getProjectlogo() %>" width="300px" style="position: absolute;right:65px;bottom:100px"></img>-->
+
+<script src="./js/mui.min.js"></script>
+<script src="./js/common.js"></script>
+<script src="./WebContent/js/jquery-1.8.2.min.js"></script>
+<script src="./WebContent/js/radar.js"></script>
+<script src="./WebContent/js/echarts.min.js"></script>
+<script src="./js/mui.min.js"></script>
+<script src="./WebContent/js/jquery-migrate-1.2.1.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+    var clickMusic = new Audio('mp3/click.mp3');
+
+    var dataset = localStorage.getItem('dataset');
+    var dataset_index = localStorage.getItem('dataset_index');
+    var dataset_condition = localStorage.getItem('dataset_condition');
+    var coid = localStorage.getItem('coid');
+    var coidpic_task = localStorage.getItem('coidpic_task');
+    var projectid = localStorage.getItem('projectid');
+    var userid = localStorage.getItem('userid');
+    var title = localStorage.getItem('title');
+    var tasklogo = JSON.parse(localStorage.getItem('tasklogo'));
+
+    var projectInfo = JSON.parse(localStorage.getItem('project'));
+    var userInfoProject = JSON.parse(localStorage.getItem('user'));
+    $('#ch_title').html(projectInfo.projectname);
+    $('.username').html('姓名：' +userInfoProject.userName);
+    if (userInfoProject.sex === '1'){
+        $('.sexual').html('性别：男');
+    } else{
+        $('.sexual').html('性别：女');
+    }
+    $('.age').html('生日：' +userInfoProject.birthday);
+
+    //五个任务数据echars图表展示
+    logo();
+    //下一页
+    function next(){
+        mui.openWindow({
+            url: 'radar2.html',
+            createNew: true,
+            styles: {
+                cachemode:"noCache",
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

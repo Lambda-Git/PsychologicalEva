@@ -1,0 +1,140 @@
+body{
+	position: relative;
+	margin:auto;
+	font-family: 'microsoft yahei';
+}
+#inner_box{
+	margin:auto;
+}
+.text{
+	min-height:20px;
+	width:100%;
+	position: absolute;
+
+}
+.textbox{
+	width:120px;
+	height:20px;
+	position: absolute;
+	text-align: center;
+	font-family: 'microsoft yahei';
+
+}
+.starbox_out{
+	width: 900px;
+	position: absolute;
+	top: 110px;
+	left: 45px;
+	height: 540px;
+
+
+}
+.starbox{
+	float:left;
+	width:46%;
+	height:75px;
+	margin:30px 15px;
+	padding-left:75px;
+	position: relative;
+}
+.starbox_inner{
+	border:2px solid #333;
+	border-radius: 45px;
+	height:75px;
+	position: relative;
+}
+.icon{
+	position: absolute;
+	left: 15px;
+	top: 10px;
+
+
+}
+.starbox_text{
+	padding:5px 10px;
+}
+.box_left{
+	width:45%;
+	height:60px;
+	line-height: 60px;
+	margin-top:7px;
+	border-right:1px solid #999;
+	font-size:16px;
+	font-weight: bold;
+	text-align: center;
+}  
+.box_right{
+	width: 170px;
+	height: 60px;
+	position: absolute;
+	left: 159px;
+	top: 25px; 
+	/*
+	background: url('star_gray.PNG') no-repeat;
+	background-size:120px; 
+	background-position: 15px 15px; 
+	*/
+	z-index:5;
+}
+.star_color{
+	z-index:15;
+	background: url('star_color.PNG') no-repeat;
+	background-size:120px; 
+	background-position: 15px 15px; 
+	overflow: hidden;
+}
+.big_text{
+	position: absolute;
+	width: 890px;
+	height: 430px;
+	top: 900px;
+	left: 70px;  
+	font-size:14px;
+	//text-indent: 2em;  
+	line-height: 20px;
+}
+#outer_box input{
+	width:40%;
+	margin-right: 10px
+
+}
+.dimension{
+	width:15%!important;
+}
+.logo{
+	width:5px;height:5px;border-radius: 5px;background: #000;position: absolute;left: 509px;top: 762px;
+	overflow: visible;
+}
+.logo img{
+	position: relative;
+	left: -50%;
+	top: -50%;
+}
+.header_box{
+	text-align: center;
+}
+.big_title{
+	font-size:32px;
+	color:#FFDC72;
+	text-shadow: 0px 0px 3px rgba(0,0,0,1) 
+}
+.none_padding{
+	padding-top: 0px!important;
+}
+.di_intro{
+	width:400px;
+	height:200px;
+}
+.di_pic{
+
+	
+}
+.email{
+	position: absolute;
+	bottom: 100px;
+	left: 338px;
+	font-size: 16px;
+}
+#main_processing_div{
+	top:-1000px !important
+}

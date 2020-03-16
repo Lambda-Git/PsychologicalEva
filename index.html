@@ -24,7 +24,7 @@
 			.curUser {
 				font-weight: 600;
 				color: #fffaea;
-				font-size: 16px;
+				font-size: 12px;
 				margin: auto;
 				position: absolute;
 				top: 10px;
@@ -113,6 +113,68 @@
 	<script type="text/javascript" charset="utf-8">
             var clickMusic = new Audio('mp3/click.mp3');
 			$('.curUser').html('欢迎' +userInfo.userName+ '同学');
+
+            //取得用户信息接口
+            var userData_ = {
+                uid:localStorage.getItem('uid'),
+                access_token:localStorage.getItem('access_token'),
+                userType:localStorage.getItem('userType')
+            }
+            var loginData = {
+                clazz: 'com.lattice.action.proxy.thirdparty.rest.api.ThirdPartyUsersProxy',
+                service: 'getUserInfo',
+                args: JSON.stringify(userData_)
+            };
+            $.ajax({
+                type: 'POST',
+                url: 'http://www.dweipsy.com/lattice/CommonActionThirdPartyProxy',
+                data: loginData,
+                dataType: 'json',
+                success: function (data) {
+                    localStorage.setItem('coid',JSON.stringify(data.results.coid))
+
+					//获取个体报告信息接口
+                    var argsdata = {
+                        coid:localStorage.getItem('coid'),
+                        userid:localStorage.getItem('uid'),
+                        projectid:1812,
+                        access_token:localStorage.getItem('access_token')
+                    }
+                    var reportData = {
+                        clazz: 'com.lattice.action.proxy.thirdparty.rest.api.ThirdPartyReportProxy',
+                        service: 'getOneRadarReport',
+                        args: JSON.stringify(argsdata)
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://www.dweipsy.com/lattice/CommonActionProxy',
+                        data: reportData,
+                        dataType: 'json',
+                        success: function (data) {
+                            localStorage.setItem('dataset',JSON.stringify(data.dataset))
+                            localStorage.setItem('dataset_index',JSON.stringify(data.dataset_index))
+                            localStorage.setItem('dataset_condition',JSON.stringify(data.dataset_condition))
+                            localStorage.setItem('coid',JSON.stringify(data.coid))
+                            localStorage.setItem('coidpic_task',JSON.stringify(data.coidpic_task))
+                            localStorage.setItem('projectid',JSON.stringify(data.project.projectid))
+                            localStorage.setItem('userid',JSON.stringify(data.userid))
+                            localStorage.setItem('title',JSON.stringify(data.title))
+                            localStorage.setItem('tasklogo',JSON.stringify(data.tasklogo))
+							//项目信息+用户信息
+                            localStorage.setItem('project',JSON.stringify(data.project))
+                            localStorage.setItem('user',JSON.stringify(data.user))
+                            localStorage.setItem('coidpic_whole',JSON.stringify(data.coidpic_whole))
+                            localStorage.setItem('shortinterpretation',JSON.stringify(data.shortinterpretation))
+                            localStorage.setItem('longinterpretation',JSON.stringify(data.longinterpretation))
+                            localStorage.setItem('taskdescription',JSON.stringify(data.taskdescription))
+                            localStorage.setItem('emailaddress',JSON.stringify(data.emailaddress))
+                        }
+                    });
+
+                }
+            });
+
+
 			/*按钮加载效果*/
 			mui(document.body).on('tap', '.mui-btn', function(e) {
 				mui(this).button('loading');
@@ -134,7 +196,14 @@
 					}, 500);
 				} else if (go === 2) {
                     setTimeout(function(){
-                        mui.toast('建设中...敬请期待!',{ duration:'long', type:'div' })
+                        mui.openWindow({
+                            // url: './getReport.html',
+                            url: './radar.html',
+                            createNew: true,
+                            styles: {
+                                cachemode:"noCache",
+                            }
+                        });
                     }, 500);
 				}
 			}
