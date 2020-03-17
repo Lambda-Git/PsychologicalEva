@@ -151,14 +151,15 @@
                         data: reportData,
                         dataType: 'json',
                         success: function (data) {
-                            localStorage.setItem('dataset',JSON.stringify(data.dataset))
+                        	console.log(data.title);
+                            localStorage.setItem('dataset',data.dataset)
                             localStorage.setItem('dataset_index',JSON.stringify(data.dataset_index))
                             localStorage.setItem('dataset_condition',JSON.stringify(data.dataset_condition))
                             localStorage.setItem('coid',JSON.stringify(data.coid))
                             localStorage.setItem('coidpic_task',JSON.stringify(data.coidpic_task))
                             localStorage.setItem('projectid',JSON.stringify(data.project.projectid))
                             localStorage.setItem('userid',JSON.stringify(data.userid))
-                            localStorage.setItem('title',JSON.stringify(data.title))
+                            localStorage.setItem('title',data.title)
                             localStorage.setItem('tasklogo',JSON.stringify(data.tasklogo))
 							//项目信息+用户信息
                             localStorage.setItem('project',JSON.stringify(data.project))
