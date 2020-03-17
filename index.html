@@ -151,6 +151,7 @@
                         data: reportData,
                         dataType: 'json',
                         success: function (data) {
+
                             localStorage.setItem('dataset',data.dataset)
                             localStorage.setItem('dataset_index',JSON.stringify(data.dataset_index))
                             localStorage.setItem('dataset_condition',JSON.stringify(data.dataset_condition))
