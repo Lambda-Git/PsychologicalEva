@@ -84,8 +84,8 @@
       var myChart = echarts.init(document.getElementById('inner_box'));
 
         // 指定图表的配置项和数据
-
       	var array_tmp=title.split(",");
+
       	var result_data=[];
       	for(var i=0;i<array_tmp.length;i++){
       		var tmp={text:"blank",max:9};
@@ -93,7 +93,7 @@
       		result_data.push(tmp);
       	}
       	//console.log(result_data);
-      	console.log(JSON.stringify(result_data));
+      	console.log(result_data);
 
 
         var option = {
@@ -309,8 +309,6 @@ function logo(data){
 	}
 	data=data_new;
 
-	//data.reverse();
-	console.log(data);
 
 	var angle=2*Math.PI/data.length;
 	var radius=230;
