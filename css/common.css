@@ -13,8 +13,9 @@ body {
 
 /*返回上一页按钮*/
 img.goLeft {
-	margin-left: 20px;
-    margin-top: 10px;
+    width: 30px;
+    margin-left: 104px;
+    margin-top: 5px;
 }
 
 
