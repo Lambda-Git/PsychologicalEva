@@ -4,15 +4,16 @@
     <meta charset="UTF-8"/>
     <link href="./WebContent/css/bootstrap.css" rel="stylesheet"/>
     <link href="./WebContent/css/radar.css" rel="stylesheet" />
+    <link href="./css/mui.min.css" rel="stylesheet" />
     <link href="./WebContent/css/radar.css" rel="stylesheet" media="print"/>
     <link href="./WebContent/css/bootstrap.css" rel="stylesheet" media="print"/>
     <title>心里测评报告</title>
 </head>
 
 <body>
-<div class="mui-col-sm-3" style="text-align: right;margin-right: 30px;">
-    <img style="margin-top: 5px;width: 40px;" class="goLeft" onclick="goNext('index.html')" src="image/icon/goLeft.png" />
-</div>
+<!--<div>-->
+    <!--<img style="position: absolute;margin-top: 22px;width: 45px;" class="goLeft" onclick="goNext('index.html')" src="image/icon/goLeft.png" />-->
+<!--</div>-->
 <img id='background_img_id' src="./image/background_blank.jpg" width="100%" height='100%' style="z-index:-1;position: absolute;" />
 <div id='div_tobe_print_id' style="z-index:99;position: relative;">
     <div class="header_box" style="position: absolute;width:100%">
@@ -32,7 +33,9 @@
 </div>
 <div style="text-align: center;position: relative;bottom: 0px;">
     <button class="btn btn-info" type="button" style="margin: auto;width:200px;height:50px;" onclick="next();">下一页</button>
+    <button class="btn btn-info" type="button" style="margin: auto;width:200px;height:50px;" onclick="goReturn();">返回</button>
 </div>
+<img id="typeImg" src="" width="300px" style="position: absolute;right:65px;bottom:100px" />
 <!--<img src="../Users\report\<%=coidpic_whole%>\<%=pr.getProjectid() %>\<%=pr.getProjectlogo() %>" width="300px" style="position: absolute;right:65px;bottom:100px"></img>-->
 
 <script src="./js/mui.min.js"></script>
@@ -55,7 +58,9 @@
     var userid = localStorage.getItem('userid');
     var title = localStorage.getItem('title');
     var tasklogo = JSON.parse(localStorage.getItem('tasklogo'));
+    var coidpic_whole = localStorage.getItem('coidpic_whole');
 
+    $("#typeImg").attr("src","http://www.dweipsy.com/lattice/Users/report/"+coidpic_whole+"/"+projectid+"/"+"aizhikangxueersi.gif");
     var projectInfo = JSON.parse(localStorage.getItem('project'));
     var userInfoProject = JSON.parse(localStorage.getItem('user'));
     $('#ch_title').html(projectInfo.projectname);
@@ -73,6 +78,16 @@
     function next(){
         mui.openWindow({
             url: 'radar2.html',
+            createNew: true,
+            styles: {
+                cachemode:"noCache",
+            }
+        });
+    }
+    //返回
+    function goReturn(){
+        mui.openWindow({
+            url: 'index.html',
             createNew: true,
             styles: {
                 cachemode:"noCache",
